@@ -1,0 +1,11 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-09-19T15:30:10+03:00
+
+====== remoteLogging ======
+Created Friday 19 September 2014
+
+
+Remote Logging, nice for our servers
+http://michael.stapelberg.de/Artikel/remote_syslog
+https://wiki.archlinux.org/index.php/Netconsole

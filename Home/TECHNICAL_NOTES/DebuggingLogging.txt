@@ -1,0 +1,66 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-09-19T11:07:18+03:00
+
+====== DebuggingLogging ======
+Created Friday 19 September 2014
+
+
+
+**LibLogging  -   rsyslog teknolojisini kullanan kütüphane**
+https://github.com/rsyslog/liblogging    <-   buildroot da derlenmiş hali var
+http://www.liblogging.org/p/blog-page_24.html
+
+
+
+
+
+*****************************************************
+LOGANALYZER - graphical frontend for rsyslog
+https://github.com/rsyslog/loganalyzer
+
+
+*******************************************************
+
+**Nice tutorial about what can be done with rsyslog**
+https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Deployment_Guide/ch-Viewing_and_Managing_Log_Files.html
+
+
+********************************************
+**Logging to a seperate file with rsyslog**
+http://blog.shadypixel.com/log-iptables-messages-to-a-separate-file-with-rsyslog/
+
+syslog has limited capability for this
+
+
+***********************************************
+**Restarting rsyslog**
+Naturally, any configuration changes require a restart:
+$ sudo /etc/init.d/rsyslog restart
+
+***********************************************
+rsyslog -> looks promising
+http://blog.gerhards.net/
+
+
+http://unix.stackexchange.com/questions/64158/how-does-rsyslog-receive-log-messages-automatically
+
+
+https://www.digitalocean.com/community/tutorials/how-to-view-and-configure-linux-logs-on-ubuntu-and-centos
+
+**************************************************************
+**rsyslog notes**
+
+messages enter rsyslog with the help of input modules. Then, they are passed to ruleset, where rules are conditionally applied. When a rule matches, the message is transferred to an action, which then does something to the message, e.g. write it to a file or database or forward it to a remote host.
+
+Inputs
+
+Every input requires an input module to be loaded and a listener defined for it. Full details can be found inside the rsyslog modules documentation. Once loaded, inputs are defined via the input() object.
+
+Outputs
+
+Outputs are also called “actions”. A small set of actions is pre-loaded (like the output file writer, which is used in almost every rsyslog.conf), others must be loaded just like inputs.
+
+**********************************************************
+
+Rsyslog supports NSMP traps

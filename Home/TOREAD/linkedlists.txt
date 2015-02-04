@@ -1,0 +1,13 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-09-05T14:06:30+03:00
+
+====== linkedlists ======
+Created Friday 05 September 2014
+
+http://www.sanfoundry.com/c-programming-examples-linked-list/
+
+10 numara linked list
+https://github.com/tomelm/C-Doubly-Linked-List/blob/master/test.c
+
+https://gist.github.com/viking/2521704   thread safe

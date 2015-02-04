@@ -1,0 +1,15 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-16T11:00:19.942706
+
+====== Nand Flash wr-rd ======
+Created Wednesday 16 April 2014
+
+
+**FLASH hafıza kullanılan filesystem imajının JFFS2 olarak alınması **
+
+mount -t jffs2 /dev/mtdblock4 /mnt/flash2
+mkfs.jffs2 -qn -r /mnt/flash2 -e 128 -p -X zlib -t -v -o rootfs.jffs2
+sumtool -n -e 0x20000 -p -i rootfs.jffs2 -o rootfs_sum.jffs2
+flash_eraseall -j /dev/mtd4
+nandwrite -p /dev/mtd4 rootfs_sum.jffs2

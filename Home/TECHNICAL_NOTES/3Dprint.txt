@@ -1,0 +1,57 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-08-06T14:42:31+03:00
+
+====== 3Dprint ======
+Created Wednesday 06 August 2014
+
+**lulzbot + octopus**
+http://ieatbrains.com/?p=88
+
+**Magnetic filament**
+https://www.protoparadigm.com/
+
+
+**Test models for 3D printer evaluation**
+http://www.adafruit.com/blog/2014/11/06/3d-printer-test-models-released/
+
+New 3D printer alternative
+http://3dprintingindustry.com/2014/08/05/solidoodle-releases-three-new-3d-printers-pre-order-prices-starting-349/?utm_source=twitter&utm_medium=social&utm_campaign=3dpi%2Btwitter
+http://www.solidoodle.com/workbench  (uluslararası garantiyi sor)
+http://www.dutycalculator.com/new-import-duty-and-tax-calculation/saved_calculations/view_details/188715474/    (customs duty)
+
+
+
+
+Tips for better 3D design and nice lighting products
+http://st3p3d.com/blogs/3d-printing
+http://st3p3d.com/collections/all?page=2
+http://st3p3d.com/pages/what-is-3d-printing   (vapor finishing)
+
+
+Importing inkscape 2D drawings to OpenScad
+http://3dtopo.com/lostPLA/
+
+
+nice design
+http://www.thingiverse.com/thing:390713
+
+ import extension in openscad 
+http://en.wikibooks.org/wiki/OpenSCAD_User_Manual/DXF_Extrusion
+http://www.makerbot.com/blog/2011/05/25/inkscape-for-openscad-users/
+http://zype.co.nz/articles/3d-printing-inkscape-3d
+
+
+Polising PLA printed parts 
+http://www.protoparadigm.com/blog/2013/06/vapor-smoothing-and-polishing-pla-with-tetrahydrofuran-thf/  (asıl kısım)
+http://hackaday.com/2013/06/07/smoothing-pla-printed-parts/
+http://www.amazon.com/s/?field-keywords=tetrahydrofuran   (required chemicals)
+http://katygero.wordpress.com/2013/09/21/water-water-everywhere/
+http://mimobaby.com/
+
+Polishing ABS printed parts
+http://www.soliforum.com/topic/165/acetone-vapor-bath/
+
+Nice tip for condensation, cool your 3D printed objects beforehand
+http://www.youtube.com/watch?v=5sblh0bBHoQ    (Acetone and a rice cooker)
+http://www.youtube.com/watch?v=AoMH2z2O4Ys   

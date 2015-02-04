@@ -1,0 +1,562 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-02T09:16:36.724576
+
+====== TECHNICAL NOTES ======
+Created Wednesday 02 April 2014
+
+**getting terminal output to pasteboard**
+http://askubuntu.com/questions/184397/how-do-i-pipe-terminal-standard-output-stdout-to-the-clipboard
+suanda alias kullandım,  copy diyince çıktıyı pasteboard a alıyor
+
+**Taking PARTIAL SCREENSHOTS in UBUNTU, quite nice**
+press SHIFT + printscreen  then release, and select the area, Voila!!
+
+**circular buffer, nice**
+netcat6 projesinde circular bufferi implemantasyonu var güzel
+github dan kodu çekebilirsin
+
+**Buildroot Hack - config**
+buildroot da make menuconfig yaptıktan sonra secimleri yapıyorsun daha sonra bunlar 
+buildroot/package/ffmpeg/     package klasörü altında her komponentin kendi   *.mk dosyasında duruyor
+oraya müdahale edip ekstra değişiklikleri yapabilirsin
+
+**Buildroot** **Download edip daha sonra direk ffmpeg cross compile etme**
+önce buildroot'u indir, halihazırdaki config dosyasını kullan
+
+cd  [[~/installedProgs/buildroot/dl]]
+cp ffmpeg-2.0.5.tar.gz [[~/ffmpeg-2.0.5.tar.gz]]
+tar xvf ffmpeg-2.0.5.tar.gz
+cd ffmpeg-2.0.5
+mkdir install
+./configure --enable-cross-compile --cross-prefix=/home/rifat/installedProgs/buildroot/output/host/usr/bin/arm-none-linux-gnueabi- --sysroot=/home/rifat/installedProgs/buildroot/output/host/usr/arm-buildroot-linux-gnueabi/sysroot --host-cc=/usr/bin/gcc --arch=arm --target-os=linux --pkg-config=/home/rifat/installedProgs/buildroot/output/host/usr/bin/pkg-config --prefix=/home/rifat/ffmpeg-2.5.2/install --enable-gpl --enable-version3 --enable-nonfree --enable-postproc --enable-libfaac --enable-libx264 --enable-bsf=h264_mp4toannexb --enable-bsf=aac_adtstoasc 
+--cpu=cortex-a8
+
+make
+make install
+
+
+
+
+**backup with rsync**
+
+******* getting the backup of files *******
+rsync -axv --exclude={\
+\
+"/dev/*",\
+"/sys/*",\
+"/tmp/*",\
+"/proc/*",\
+"/lost+found/*",\
+"/run/*",\
+"/mnt/*",\
+"/media/*"}\
+ /* \
+rifat@192.168.4.133:/home/rifat/projects/hd[[modeo/gdbFileSystem]]
+
+
+
+
+
+
+**doing full backup with TAR command**
+http://www.aboutdebian.com/tar-backup.htm
+tar -cvpf /backups/fullbackup.tar --directory=/ --exclude=proc --exclude=sys --exclude=dev/pts --exclude=backups . 
+
+
+
+**LPC82X touch solution**
+https://www.youtube.com/watch?v=gyO55od2MzU
+nxp den touch sensor + dev kiti ucuza alabilirsin
+
+    ipod circular user interface'i taklit edebilirsin
+
+
+**hexer  search tip (binary file viewer)**
+hexer da hexadecimal aratmak için
+search komutundan sonra 
+   \x96   veya
+  \xx96 45 34    kullanabilirsin
+
+
+**C gibberish ↔ English translator, really nice**
+http://www.cdecl.org/
+
+**perf (linux)   performance analyzer**
+https://perf.wiki.kernel.org/index.php/Main_Page
+
+**scan-build   static analyzer**
+http://clang-analyzer.llvm.org/scan-build.html
+
+**Vagrant Scripts    docker like ...**
+Create and configure lightweight, reproducible, and portable development environments
+https://www.vagrantup.com/
+http://stackoverflow.com/questions/16647069/should-i-use-vagrant-or-docker-io-for-creating-an-isolated-environment
+
+
+**Backing up the MBR via dd command**
+https://wiki.archlinux.org/index.php/disk_cloning
+The MBR is stored in the the first 512 bytes of the disk. It consist of 3 parts:
+
+    The first 446 bytes contain the boot loader.
+    The next 64 bytes contain the partition table (4 entries of 16 bytes each, one entry for each primary partition).
+    The last 2 bytes contain an identifier
+
+To save the MBR into the file "mbr.img":
+
+# dd if=/dev/hda of=/mnt/sda1/mbr.img bs=512 count=1
+
+To restore (be careful : this could destroy your existing partition table and with it access to all data on the disk):
+
+# dd if=/mnt/sda1/mbr.img of=/dev/hda
+
+If you only want to restore the boot loader, but not the primary partition table entries, just restore the first 446 bytes of the MBR:
+
+# dd if=/mnt/sda1/mbr.img of=/dev/hda bs=446 count=1
+
+To restore only the partition table, one must use
+
+# dd if=/mnt/sda1/mbr.img of=/dev/hda bs=1 skip=446 count=64
+
+You can also get the MBR from a full dd disk image.
+
+# dd if=/path/to/disk.img of=/mnt/sda1/mbr.img bs=512 count=1
+
+
+**Kpartx : a tool for mounting partitions within an image file**
+https://robert.penz.name/73/kpartx-a-tool-for-mounting-partitions-within-an-image-file/
+kpartx -l  imagefile   : gives you an overview of partitions in the image file 
+kpartx -a imagefile   : enables you to access the partitions in imagefile via [[/dev/mapper/loop0pX]] 
+ (where X is the number of partition)
+
+once access is enabled, use below command to mount it 
+mount [[/dev/mapper/loop0pX]]  [[/mnt/]] -o loop,ro
+
+when you are finished, unmount it and then disconnect the mapper device
+umount [[/mnt/name]]
+kpartx -d imagefile
+
+**writing faster with DD,  **
+set the block size to maximum, 4M
+dd bs=4M if=~/2012-12-16-wheezy-raspbian.img of=/dev/sdd
+
+**dd with progress bar**
+dcfldd , grab the source code and compile it
+
+**Finding progress of dd**
+sudo pkill -USR1 -n -x dcfldd  
+sudo pkill -USR1 -n -x dd
+
+**Using DD to get only a certain part of the SD card**
+http://pclosmag.com/html/Issues/201205/page10.html
+sudo dd if=/dev/sdc of=./mmcImage-8 bs=4k count=128000       copies the first 524MB
+
+dd if=/dev/urandom of=testfile bs=4k count=256000     created 1GB of random data
+
+dd if=/dev/zero bs=1024 count=1000000 of=/home/me/1Gb.file        (write)
+dd if=/home/me/1Gb.file bs=64k | dd of=/dev/null            (read)
+
+**Debug messages**
+http://sql.learncodethehardway.org/    nice tutorials
+http://c.learncodethehardway.org/book/ex20.html
+
+**Netbook için xfce desktop environment**
+//http://www.webupd8.org/2013/06/mediterraneannight-theme-pack-gets-full.html//
+
+**Installing new themes & icons**
+sudo apt-get install myunity
+sudo apt-get install ubuntu-tweak   //depending on which one is available//
+
+
+sudo add-apt-repository ppa:numix/ppa
+sudo apt-get update
+sudo apt-get install numix-gtk-theme
+sudo apt-get install numix-icon-theme-circle
+then change the icons from myunity
+**http://www.webupd8.org/2013/06/mediterraneannight-theme-pack-gets-full.html**
+
+**Main menu - Useful for adding programs to Dash**
+install from software center
+after that you can change the icons
+**http://ubuntuhandbook.org/index.php/2014/03/how-to-change-an-application-icon-in-ubuntu-unity-tips/**
+
+//To add an icon to the dash you can make custom icons and put them into ~/.local/share/applications.//
+
+//Simply copy and paste this template into gedit (or another text editor) and save it as libreoffice.desktop into the folder.//
+
+//[Desktop Entry]//
+//Name=Libre Offce//
+//Comment=Office Application//
+//Exec=libre-office//
+//Icon=/usr/share/pixmaps/libreoffice.png//
+//Terminal=false//
+//Type=Application//
+//StartupNotify=true//
+//Keywords=libre;office;writer;//
+//Categories=Office//
+
+//If you want it so the icon is available for all users, put the .desktop file in /usr/share/applications.//
+
+//The Categories=Office bit means it will show up under "Office" in the dash. If the icon is in /usr/share/pixmaps/libreoffice.png then actually you can just write Icon=libreoffice, there's no need for the full path, but only if it's in that path. Don't know if that works in Gnome 3 though.//
+
+//If you have translations for the language you can specify them using something like the following://
+//Name[en_GB]=Libre Office//
+//And replace [en_GB] with the code for each language.//
+
+
+
+
+**Uninstalling vim  and installing it from source**
+//https://github.com/Valloric/YouCompleteMe/wiki/Building-Vim-from-source//   <= nice
+//http://rajanand02.github.io/articles/vim///
+sudo apt-get remove vim vim-runtime gvim
+ sudo apt-get remove vim-tiny vim-common vim-gui-common
+
+**Tokenizing strings with strtok - C code**
+//http://www.cs.utah.edu/dept/old/texinfo/glibc-manual-0.02/library_5.html//
+
+**Coloring console** 
+//http://askubuntu.com/questions/123268/changing-colors-for-user-host-directory-information-in-terminal-command-prompt//
+
+**güzel site**
+//http://code.org///
+
+**disabling sudo command for a user**
+switch to root user and change its password
+
+$su
+$passwd
+
+$vigr      // edits [[/etc/group]] file
+remove modeo user from admin group via deleting 
+admin:x:119:modeo    -> note that 119 may change on different systems
+
+$exit     // exit from root
+$sudo ls   // try sudo command as user "modeo"
+
+modeo@modeo:~$ sudo ls
+modeo is not in the sudoers file.  This incident will be reported.
+
+
+
+**socat: tunnel IP through TTY**
+//http://stackoverflow.com/questions/5890505/socat-tunnel-ip-through-tty//
+slip kullanıyor diye dusunuyorum
+
+
+**Nice serialization tool,   google protobuf  **
+//https://code.google.com/p/protobuf-json///
+
+json -> structure    deserialization
+structure -> json     serialization
+
+
+**Derlenen kütüphanelerin sistem bazında bulunabilmesi için yapılması gerekenler  Nice read**
+** Hint on install location **
+
+  By default, the package will be installed to /usr/local.  However,
+  on many platforms, /usr/local/lib is not part of LD_LIBRARY_PATH.
+  You can add it, but it may be easier to just install to /usr
+  instead.  To do this, invoke configure as follows:
+
+    ./configure --prefix=/usr
+
+  If you already built the package with a different prefix, make sure
+  to run "make clean" before building again.
+
+
+yani [[/usr/local/lib]] altına koydukların her zaman sistem genelinde görülmeyebilir.
+
+//http://www.danjourno.com/asterisk-libjansson-cannot-open-shared///  linkinde bir çözüm sunulmuş
+
+echo “/usr/local/lib” > [[/etc/ld.so.conf.d/usr_local.conf]]    <= ld config dosyasına [[/usr/local/lib]] i ekliyor
+[[/sbin/ldconfig]]              ⇐ ldconfig kütüphanlerin tekrardan derlenmesini sağlıyor.
+
+//https://github.com/jgarzik/cpuminer/issues/38//  bu linkde güzel anlatıyor
+ln -s /usr/local/lib/libjansson.so.4 [[/usr/lib/libjansson.so.4]]     <= default [[/usr/lib]] klasörüne soft link oluşturuyor
+ldconfig                                                                                                                  <=  reload the libraries again
+
+
+**Bir başka örnek**
+/usr/bin/ld: cannot find -lperl
+
+here is the fix:
+hostname:/usr/lib$ sudo ln -s libperl.so.5.8 libperl.so
+substitute 5.8 for whatever your version number is
+
+all you are doing is creating a link from /usr/lib/libperl.so.5.8 to /usr/lib/libperl.so
+
+
+
+**klasör boyutuna bakmak**
+du -h
+ls -altrh     burda h: human readable
+
+**Ubuntu'da X server kitlendiğinde** 
+ctrl - alt - f1, f2,f3, f4   ... ile komut satırı terminallerine düşebilirsin
+ctrl - alt - f7    X serverın çalıştığı terminal oluyor.
+
+
+**cJson Parser**
+http://sourceforge.net/projects/cjson/files/
+
+**Enabling /Preventing USB access to Unix box**
+[[/etc/modprobe/blacklist.conf]] altından
+usb-storage modülünü kaldır,
+
+yada her seferinde aşağıdakini yaz
+sudo modprobe usb-storage 
+ chmod 755 /media
+
+
+
+**Git rm several files?**
+git add -u
+
+**Makefile generation for structured core projects, nice **
+http://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/
+
+**Running valgrind**
+download the source
+follow the README (for cross compilation, you need to play with [[./configure]] options)
+
+run [[./valgrind]] ls -l   
+if there is a problem, read the output, on my machine, I needed to install the following 
+sudo apt-get install libc6-dbg
+
+**Loading an VirtualBox image** 
+https://blogs.oracle.com/oswald/entry/importing_a_vdi_in_virtualbox
+
+**Grep ile find birleşimi**
+$ find . | xargs grep 'search'
+
+grep "PACK_CORE_LENGTH" -r   .   (sadece grep ile aramak için)
+
+**Vim de kullanılan scriptleri görmek için**
+:scripts demen yeterli
+eger home directory de .vimrc yoksa o zaman [[/usr/share/vim]] altındaki dosyalara bakılıp
+ayarların alınıyor.   [[/usr/share/vim/vim73/plugin]] bunlardan biri mesela
+
+**mappings in VIM**
+no refers to mappings that are used when in normal mode
+cno refers to mappings that are used when in command-line mode
+ino refers to mappings that are used when in insert mode
+vimrc file tips
+http://codeincomplete.com/posts/2011/3/4/my_vimrc_file/
+
+
+**Ubuntu 12.04 den Ortak'a baglanmak için**
+Network -> Intranet ->  Window Shares on Intranet -> Ortak    
+kullanıcı adı : ortak
+sifre: ortak
+
+
+**SVN reposu çekme**
+svn co http://192.168.2.165/svn/modeo
+
+
+**Ubuntu 12.04 kurma**
+firefox için
+   everynote clearly
+   tileview/tab
+   download manager 
+   super start
+
+kurulcak paketler
+ virtualbox, vim, git, openssh-server, zimwiki, eclipse, ise, eagle, kicad, gerbv, filezilla, gparted, vlc, qt
+
+
+
+   
+**adding a repo to /etc/apt/sources, adding the key and then installing the package**
+           deb http://download.virtualbox.org/virtualbox/debian precise contrib
+
+ The Oracle public key for apt-secure can be downloaded from appropriate link and you can add this key with
+           sudo apt-key add oracle_vbox.asc
+
+  later on you do
+     sudo apt-get update
+    sudo apt-get install virtualbox-4.3
+
+**apt-get install çalışmazsa, deb paket linkini bulup indirmek**
+
+e.g Failed to fetch http://us-east-1.ec2.archive.ubuntu.com/ubuntu/pool/universe/o/opencv/libopencv-video-dev_2.3.1-7_i386.deb
+
+then I would fetch the package manualy from the main server like: 
+wget http://archive.ubuntu.com/ubuntu/pool/universe/o/opencv/libopencv-video-dev_2.3.1-7_i386.deb 
+
+
+**Samba Server nasıl kurulacak gayet iyi**
+http://www.noobslab.com/2012/03/configure-samba-sharing-between-ubuntu.html
+
+sudo apt-get install samba samba-common
+sudo apt-get install python-glade2
+sudo apt-get install system-config-samba
+
+Now go to Dash and search for 'Samba' then open it. As shown in picture
+When Samba Server Configuration open, Click on 'Add +' button then click on browse >home >select user.
+Now go to 'Access' tab and select username from which you want to access sharing.
+Now set password on your selected username for samba sharing. Enter following command to set password (change noobslab with your selected username).
+Terminal Command:
+sudo smbpasswd -a noobslab
+Now right click on Folder which you want to share on network, then select 'Sharing Options'
+Here is Folder Sharing options, You can choose and write whatever you want to do. Then click on 'Create Share'
+Now open Terminal and enter following command to know your local network ip. (See the picture below and see red marks)
+Terminal Command:
+ifconfig
+Note your Ubuntu/Linux Machine IP Address
+
+**Now on your windows machine**
+type run
+for sharing on Windows, Now go to start and open 'Run' then enter ip with double backslash. Like this 
+\\192.168.1.3
+
+**Connecting to samba server from ubuntu** 
+Now go to Ubuntu, Open File Browser>File Menu > 'Connect to Server'
+Select 'Windows Share' in Service type and Enter Windows IP Address in 'Server' then click on 'Connect
+Enter your Windows Selected Username and Password, then click on 'Connect'. (Not Samba username Password)
+
+ubuntu da samba server'ın mount edildigi nokta
+[[~/.gvfs]]  altında oluyor.
+
+**Xilinx ISE de Cable Driver kurmak**
+http://www.george-smart.co.uk/wiki/Xilinx_JTAG_Linux
+
+
+**Virtualbox da USB üzerinden boot etmek**
+  öncelikle grep vboxusers [[/etc/group]] yapıp, kendinin vboxusers grubuna üye olup olmadığını görmen lazım
+http://ubuntuforums.org/showthread.php?t=1784357
+donen cevap  vboxusers:x:122:rifat ise okey ama rifat yoksa o zaman kendini o gruba eklemen lazım
+  sudo adduser rifat vboxusers
+daha sonra tekrardan greple
+vboxusers:x:126:rifat
+
+bunu yaptıktanda sonra virtualbox da settings'den USB kısmında kendi drive'ını görebiliyor olman lazım
+
+daha sonra http://www.plop.at/en/ploplinux/download.html  sitesinden ploplinux live CD yi indir ve bunu Virtualbox da "Storage" controller IDE de göster, bu şekilde sistemi çalıştırdığında USB drive'ı rahatlıkla boot için seçebiliyorsun
+http://www.youtube.com/watch?v=aSS1bOF7sDA   video tutorial'ı gayet güzel site
+
+**Virtualbox'da Guest Additions yükleme**
+before installing the guest additions, one has to prepare the guest system for building external kernel modules hence
+
+sudo apt-get install dkms
+
+Then you mount the VboxGuestAdditions.iso 
+(in your host OS, this is placed in [[/usr/share/virtualbox/VBoxGuestAdditions.iso]] )
+
+so in your Guest OS, (actually you use the virtualbox menu)
+Devices -> CD DEvices -> Choose a virtual CD device
+
+once this is mounted then virtualboxguestaddions automatically runs
+wait for the installation to finish,
+reboot your device and you're done
+
+**Sharing folders between Host and Guest OS in virtualbox**
+In virtualbox menu,
+Devices -> Shared Folder -> Add shared folder (but don't pick automount)
+daha sonra guest OS da kendini vbıxsf grubuna ekle
+
+sudo adduser rifat vboxsf  (aslında bu automount için gecerli diye dusunuyorum)
+
+aşağıdaki komut, host OS de  virtualSharedFolder adını verip paylaşıma açtığın folder'ı  Guest OS de host klasörüne
+sadece kullanıcının açabileceğ, rw access olan ve dosyaların EXECUTABLE çıkmayacağı şekilde mount eder
+
+http://polach.cc/howto-remove-executable-flag-from-files-in-virtual-box-shared-folder-on-linux-guest
+yukarıdaki linkden -o dan sonra gelen parametreleri aldım
+sudo mount -t vboxsf -o uid=1000,gid=1001,umask=007,fmode=660 virtualSharedFolder /home/rifat[[/host]]
+
+bu komutu otomatiğe almak için [[/etc/rc.local]]    scriptine yerleştirebilirsin. [[/etc/fstab]] 'e koymak mantıklı değil 
+cunku shared folder module load edilmeden yüklenilecegi için her zaman düzgün çalışmayabilir.
+
+https://forums.virtualbox.org/viewtopic.php?t=15868
+"""" If you want to have it mount automatically upon each boot, put the mount command in /etc/rc.local (Debian based distro's), or whatever script is run at the end of the boot process. The Shared Folders service should mount them automatically, but that doesn't always happen. Using /etc/fstab has little effect, because that file is processed before the SF module is loaded and will fail to mount the share. Sometimes, the share does get mounted because the GA check for it when they are loaded upon boot, but it's very flaky, meaning it doesn't work most of the time. You're better of with the first option.
+When you put the mount command in /etc/rc.local, so it's mounted at startup, you can't use the short notation for your home folder. During startup, everything is done through the root user, so using ~ for home, means it's the home folder of Root (/root). Change it to the full path.   """" 
+
+
+**VirtualBox Host Key**
+
+Virtualbox'da HOST key  default olarak "sag taraftaki ctrl" tusu
+
+HOST + F  fullscreen
+HOST + C scaled version
+
+good to know
+
+
+
+
+**Eclipse'de hazır projeyi açmak**
+http://thusithamabotuwana.wordpress.com/2011/06/15/importing-existing-source-code-into-eclipse/
+Switch/create the new workspace location to be root folder – CLI in my case.
+Create a new Java Project – make sure the ‘Project name’ is the same as the folder name (this is the key!) – Eclipse automatically determines that this folder already exists and traverses the folder looking for relevant files. In the following example, I want to use Eclipse to work on the files under the ‘ModuleExtraction’ (not shown above) folder.
+
+modeo durumunda
+ kodlar  [[/home/fatih/Projects/Modeo/GIT/modeo-src]] altında duruyor
+
+ workspace [[/home/fatih/Projects/Modeo]] olarak belirlitilip daha sonra new project denilince
+isme GIT veriliyor.
+
+modeo-hd için
+
+**EClipse de Java version hatası**
+Eger daha önceden java yukluyse 1.6 dan mesela 1.7 ye update yapmak istiyorsan
+software center dan sadece remove etmek yetmiyor. 
+sudo apt-get purge java diyceksin
+sonra tekrardan jdk1.7 install ediceksin.
+ondan sonra eclipse luna yı çalıştırabilirsin
+
+**Eclipse'de RemoteSystemsTempFiles klasöründen kurtulmak için**
+In Window->preferences type 'remote'. Click on remote systems view and uncheck the box that says 'reopen remote systems view to previous state'. Eclipse already adds the .metadata folder - why does it add extra clutter?
+
+
+**Magnum'a seri porttan baglanmak**
+
+[[./utilities/uarthost-new]]   -dev [[/dev/ttyS2]]
+
+**AT commands**
+at+cgdcont?      gives you a list of available PDP contexts
+
+at+CGSN     get imei
+at^sysinfo  get sim status
+at+cops?   cellular service provider
+at!scp
+at!gsminfo?  returns 2G network information
+at!scpaddr=1   returns the ip address
+
+at+cgdcont=1,"IP","mgbs"
+at+gmr   => versiyon bilgisi  K2 3G demek
+
+---------------------------
+
+at+creg?       2,1 olması lazım, 2,3 olursa problem
+at+creg=2
+at+cpin
+at+cgdcont?   apn'i öüren
+at+csq           en az 10
+at!scact=1,1   internete girmeye zorla
+
+
+**Internet DNS ile alakalı**
+
+nameserver dosyası [[/etc/resolv.conf]] altında tutuluyor
+DNS: 87.118.111.215
+Secondary: 80.79.54.55
+
+
+----------------------------------------------------
+Selamlar,
+Yeni Modeo git reposu
+
+https://192.168.2.126 sitesinde Profile kısmından kendi ssh keylerinizi girerek gerekli ayarları yapabilirsiniz.
+
+Aşağıdaki komutlarla yeni repoyu origin olarak belirleyebilirsiniz.
+
+git remote rename origin origin_old
+git remote add origin git@192.168.2.126:modeo/modeo.git
+
+
+
+
+
+
+

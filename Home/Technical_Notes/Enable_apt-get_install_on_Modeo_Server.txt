@@ -1,0 +1,23 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-06-25T09:43:34.105918
+
+====== Enable apt-get install on Modeo Server ======
+Created Wednesday 25 June 2014
+
+modeo@modeo:~$ cat /etc/hosts
+127.0.0.1	localhost
+127.0.1.1	modeo
+193.140.100.100 tr.archive.ubuntu.com                                   <===  tr.archive.ubuntu adresini ekle
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+ff02::3 ip6-allhosts
+
+
+modeo@modeo:~$ cat /etc/resolv.conf 
+nameserver 195.175.39.40                              <= dns ler giriliyor
+nameserver 195.175.39.39

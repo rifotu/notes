@@ -1,0 +1,32 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-08-26T11:24:11+03:00
+
+====== JsonParsers ======
+Created Tuesday 26 August 2014
+
+cJSON
+https://github.com/kbranigan/cJSON
+
+
+**JSMN C parser libraries**
+http://zserge.com/jsmn.html
+http://alisdair.mcdiarmid.org/2012/08/14/jsmn-example.html   (examples)
+
+http://sourceforge.net/projects/cjson/
+https://github.com/json-c/json-c/wiki
+http://www.digip.org/jansson/
+
+**Stackoverflow Thread Comparing Them**
+http://stackoverflow.com/questions/6673936/parsing-json-using-c
+
+some __highlights__:
+One drawback with **jsmn** is that it doesn't handle Unicode escape sequences. 
+Also all it does is give you tokens, good luck making any sense of the data. It does look like the absolute smallest, efficient thing you can do, but it doesn't do a lot either.
+
+
+sample codes
+http://rawtherapee.com/shared/documentation/doxygen/rt_pipette_4.0.12.51/camconst_8cc_source.html
+http://evremonde.googlecode.com/svn-history/r335/trunk/tf2items/tf2items.c
+http://evremonde.googlecode.com/svn-history/r346/trunk/teamfortress2/tf2items/tf2items.c
+https://github.com/tmccombs/cjson/blob/master/encode.c

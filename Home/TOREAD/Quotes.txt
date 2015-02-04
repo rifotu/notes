@@ -1,0 +1,25 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-08-12T10:09:37+03:00
+
+====== Quotes ======
+Created Tuesday 12 August 2014
+
+
+    Value Quality above both Quantity, and Speed of development
+    Value Clear above Clever
+    Value Maintainability above The Quick Fix
+    Value Collaboration above Individuality
+    Value Refactoring, Iteration, and Evolution above Engineering
+    Value Just-In-Time above Just-In-Case
+    Value Automated Testing above Manual QA
+    Value Metrics above Instinct
+    Value Readable Code above Comments and Documentation
+    Value Small but Complete above Large and Unfinished
+    Value Libraries and Components above Frameworks
+    Value Containment above Inheritance
+    Value MVP above Kitchen Sink
+    Value Realism above both Optimism and Pessimism
+    Value Thought above Action but avoid Analysis Paralysis
+    Value Pragmatism above Idealism
+    Value The User above all else

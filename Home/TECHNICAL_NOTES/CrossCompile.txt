@@ -1,0 +1,171 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-12-12T11:17:20+02:00
+
+====== CrossCompile ======
+Created Friday 12 December 2014
+
+1) ARM mimarisine ait kodların derlenmesi için gereken derleyicinin sisteme tanıtılması 
+
+Gönderilen dosyalar arasında yeralan derleyici binary dosyalarını sistemdeki PATH değişkenine tanıtmak için bashrc dosyasını açın
+
+$ gedit ~/.bashrc
+
+Açılan text editöre aşağıdaki satırı girin (teslim edilen dosyaların Desktop'a konulduğu varsayılmıştır) ve değişiklikleri kaydedip çıkın.
+
+export PATH=~/Desktop/k2_delivery/cross_compiler/:$PATH
+
+Bilgisayarınızı yeniden başlatın veya aşağıdaki komutu girip değişiklikleri sisteme yansıtın. 
+
+$ source ~/.bashrc
+
+Şu aşamada derleyici binary dosyalarının sistem tarafından tanınıyor olması gerekmektedir. Deneme yapmak için aşağıdaki komutu girebilirsiniz
+
+$ arm-none-linux-gnueabi-gcc -v
+
+
+
+2) Beagleboard için hazırlanmış Linux Kernel'in derlenmesi
+
+Sıkıştırılmış kerneli bilgisayarınızda herhangi bir yere açın
+
+$ tar -xzvf k2_kernel.tgz
+$ cd K2_Kernel/linux-2.6.32-ccmtp/
+
+Kerneli ARM için derlemek ve istenilen değişiklikleri yapmak için aşağıdaki komut ile menuconfig menüsüne gidin
+
+$ make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- menuconfig
+
+İstenilen değişiklikleri menuconfig menüsünden uyguladıktan sonra EXIT seçeneği ile çıkın ve uImage oluşturmak için aşağıdaki komutu kullanın
+
+$ make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- uImage
+
+Oluşan uImage dosyasını ./arch/arm/boot klasöründe bulabilirsiniz.
+
+$ ls ./arch/arm/boot/uImage
+
+
+
+3) Beagleboard üzerinde çalışacak olan client kodunun derlenmesi
+
+Beagleboard üzerinde çalışan yazılımda herhangi bir değişiklik istendiğinde kaynak kodlar arasında client klasöründe değişiklik yapılması gerekmektedir. Bu noktada dikkat edilmesi gereken önemli hususlardan biri, client kodunun libmodeo kütüphanesini server ile beraber ortak kullanmasıdır. Dolayısıyla client kodu derlenmeden önce libmodeo kütüphanesinin ARM mimarisine göre derlendiğinden emin olunmalıdır.
+
+ $ cd ~/Desktop/k2_delivery/source/libmodeo
+ $ ./configure --build=i386-linux  --host=arm-none-linux-gnueabi
+ $ make clean all
+
+ Bu noktada libmodeo kütüphanesi (libmodeo.a) ARM mimarisine göre derlenmiş olmaktadır. Client kodu, istenilen değişiklikler yapıldıktan sonra aşağıdaki şekilde derlenebilir.
+
+$ cd ~/Desktop/k2_delivery/source/client
+$ make clean all
+
+Derleme hatasız bir şekilde bittikten sonra oluşan binary, modeo olarak adlandırılmıştır. Bu noktada dikkat edilmesi gereken bir başka husus, client koduna farklı bir kaynak kod dosyası veya kütüphane eklenmesi durumunda yapılması gereken hususlardır. 
+Örnek olarak uygulama.c kaynak kod dosyasının ve hesaplama.a kütüphanesinin client kodlarına eklenmek istendiği durum aşağıda belirtilmiştir.
+
+İlk olarak Makefile.am dosyasına aşağıdaki eklentilerin yapılması gerekmektedir.
+
+$ gedit ~/Desktop/k2_delivery/source/client/Makefile.am
+
+Açılan text editörde kaynak kod dosyalarına uygulama.c eklenir.
+
+modeo_SOURCES=\
+	src/main.c \
+	src/client.c \
+	src/modem.c \
+	src/settings.c \
+	src/timer.c \
+	src/file_transfer.c \
+	src/ftp.c \
+        src/uygulama.c 
+
+hesaplama.a kütüphanesinin eklenmesi için ise aşağıdaki satırların eklenmesi gerekmektedir. 
+
+HESAPLAMA=$(top_srcdir)/../libhesaplama
+AM_LDFLAGS = -L$(HESAPLAMA) -L$(MODEO)
+LDADD = $(MODEO)/libmodeo.a \
+                $(HESAPLAMA)/hesaplama.a \
+		-ldl -lpthread -lrt -lm
+
+AM_CPPFLAGS = -I$(HESAPLAMA)/inc -I$(MODEO)/inc -I./inc 
+
+Eklentiler yapıldıktan sonra değişikliklerin aktif hale gelmesi için autoreconf mekanizması kullanılacaktır. Aşağıdaki komutlar sırasıyla girilerek süreç tamamlanır.
+
+$ autoreconf -i
+$ ./configure --build= i386-linux --host=arm-none-linux-gnueabi
+$ make clean all
+
+
+4) Server Kodunun değiştirilmesi için gerekli değişiklikler
+
+Öncelikle server kodunun kullandığı libmodeo kütüphanesinin i386 mimarisine göre derlendiğinden emin olunmalıdır. 
+
+ $ cd ~/Desktop/k2_delivery/source/libmodeo
+ $ ./configure
+ $ make clean all
+
+Daha sonra server kaynak kod klasörüne gidilip derleme gerçekleştirilebilir. Derleme sonucunda oluşturulan binary "server" olarak adlandırılmıştır.
+
+ $ cd ~/Desktop/k2_delivery/source/server
+ $ make clean all
+
+
+Oluşan server programı, modeo server olarak kullanılacak olan bilgisayarda /home/modeo/conf altına modeo_server olarak kopyalanır.
+
+ $ cp ~/Desktop/server /home/modeo/conf/modeo_server
+
+5) Server Kullanıcı Arayüzünün Derlenmesi
+
+Qt ile hazırlanmış arayüzün derlenmesi için bilgisayarda Qt SDK 'ya ihtiyaç duyulmaktadır. SDK kurulduktan sonra aşağıdaki adımlar izlenerek derleme gerçekleştirilir.
+
+  $ cd ~/Desktop/k2_delivery/source/server_gui
+  $ qmake ModeoUserInterface.pro
+  $ make
+
+
+6) Libmodeo kütüphanesinin derlenmesi.
+
+Libmodeo kütüphanesi hem client hemde server kodları tarafından kullanılmaktadır. Dolayısıyla derlenirken ARM mimarisinde mi yoksa i386 mimarisinde mi kullanılcağına göre konfigürasyonu yapılmalıdır.
+
+i386 mimarisine göre derlenirken
+
+ $ cd ~/Desktop/k2_delivery/source/libmodeo
+ $ ./configure
+ $ make clean all
+
+ARM mimarisine göre derlenirken
+
+ $ cd ~/Desktop/k2_delivery/source/libmodeo
+ $ ./configure --build=i386-linux  --host=arm-none-linux-gnueabi
+ $ make clean all
+
+
+7) Server Watchdog (server_wd) programının derlenmesi
+
+Server Watchdog, server programının sürekli olarak çalıştığını kontrol etmekde ve herhangi bir sebebten ötürü programın çalışmadığını farkettiğinde server binarysini tekrardan çalıştırmaktadır.
+Normal çalışma şartlarında watchdog modülü server programını "modeo_server" adı altında aramaktadır. Aşağıdaki komutlar girilerek watchdog modülü derlenir.
+
+$ ./configure
+$ make clean all
+
+Oluşturulan server_wd programı server olarak kullanılan bilgisayarda /home/modeo/conf klasörüne kopyalanır.
+
+$ cp ~/Desktop/server_wd /home/modeo/conf/
+
+
+7) CCMTP protokolünün derlenmesi 
+
+Protokolün derlenmesi kernelin altında modül olarak gerçekleşmektedir. CCMTP kaynak kodlarında yapılan değişikliklerin etkin olması için kaynak kodların kernelin altındaki CCMTP modülüne kopyalanıp modüllerin derlenmesi gerekmektedir.
+
+$ cp ~/Desktop/k2_delivery/source/ccmtp/net/ccmtp/*.c ~/Desktop/k2_delivery/K2_Kernel/linux-2.6.32-ccmtp/net/ccmtp/
+
+Yapılan değişiklikler aktarıldıktan sonra kernel modülleri tekrardan derlenmelidir. Oluşan yeni ccmtp modülü kernelin altında .../net/ccmtp/ccmtp.ko klasöründe ccmtp.ko olarak bulunmaktadır.
+
+$ make ARCH=arm CROSS_COMPILE=arm-none-linux-gnueabi- modules
+$ cp ~/Desktop/k2_delivery/K2_Kernel/linux-2.6.32-ccmtp/net/ccmtp/ccmtp.ko ~/Desktop/
+
+
+
+
+
+
+

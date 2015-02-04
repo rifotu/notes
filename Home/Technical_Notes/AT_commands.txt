@@ -1,0 +1,16 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-06-23T09:56:32.059900
+
+====== AT commands ======
+Created Monday 23 June 2014
+
+4G modem ayarlama
+1)  at+GMR komutuna SWR şeklinde dönüyorsa LTE'dir
+2)  at!udinfo=?  komutuna 0x68a3 dönüyorsa bunu
+3) at!entercnd = "a710" ile admin moduna al daha sonra
+4) at!udpid = 68aa ile   4G modem id sine dönüştür
+
+5) udev altına [[/etc/udevrules/50.]] ..... altında 68a3  için olan kuralın aynısını 68aa içinde yaz
+
+6) sierra2.ko  sierra_net.ko sierra_net2.ko    3 tane driver modülü olmalı

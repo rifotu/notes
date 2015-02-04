@@ -1,0 +1,64 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-16T10:59:45.577834
+
+====== Technical Notes ======
+Created Wednesday 16 April 2014
+
+
+**conditional compilation with autotools**
+http://www.gnu.org/software/automake/manual/automake.html#Subdirectories-with-AM_005fCONDITIONAL
+//Burda ./configure komutu çağrıldığında tanımlı opsiyonlar belirleniyor//
+
+AC_ARG_WITH(  [swig],
+                                 [AS_HELP_STRING([--with-swig],
+                                 [use SWIG to generate bindings])],
+                                 [],
+                                 [useswig=no]
+)
+
+
+//Bu kısımda USESWIG adında bir conditional belirliyorusun,  ", " den sonrasıda  if statement//
+
+AM_CONDITIONAL([USESWIG], test "$SWIG" -a "x$useswig" != xno)
+
+makefile.am dosyasına girecekler
+
+if USESWIG
+SUBDIRS = goffice-bits
+else
+SUBDIRS =
+endif
+
+
+
+
+
+
+**running graphical applications**
+ssh -X -l username remotemachinename
+
+**NETWORK SCAN**
+nmap -sP 192.168.2.0/24  
+
+
+**svn switch related**
+svn switch --relocate http://old-url https://new-url
+
+
+
+**GVIM tips**
+:s/foo/bar/g	 Change each 'foo' to 'bar' in the current line.
+:%s/foo/bar/g	 Change each 'foo' to 'bar' in all lines.
+
+
+**Python Related**
+https://wiki.python.org/moin/SimplePrograms
+http://stackoverflow.com/questions/4967091/python-code-for-vhdl-code-generator
+http://pythontesting.net/python/regex-search-replace-examples/
+http://www.pythoncentral.io/pythons-string-replace-method-replacing-python-strings/
+http://gomputor.wordpress.com/2008/09/27/search-replace-multiple-words-or-characters-with-python/
+
+
+**Manual olarak server'a IP vermek için**
+sudo nm-connection-editor

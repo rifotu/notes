@@ -1,0 +1,16 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-07-11T15:53:00.362883
+
+====== Locking-Sync ======
+Created Friday 11 July 2014
+
+**Spin Locks and Bottom Halves**
+
+As mentioned in Chapter 7, "Bottom Halves and Deferring Work," certain locking precautions must be taken when working with bottom halves. The function spin_lock_bh() obtains the given lock and disables all bottom halves. The function spin_unlock_bh() performs the inverse.
+
+Because a bottom half may preempt process context code, if data is shared between a bottom half process context, you must protect the data in process context with both a lock and the disabling of bottom halves. Likewise, because an interrupt handler may preempt a bottom half, if data is shared between an interrupt handler and a bottom half, you must both obtain the appropriate lock and disable interrupts.
+
+Recall that two tasklets of the same type do not ever run simultaneously. Thus, there is no need to protect data used only within a single type of tasklet. If the data is shared between two different tasklets, however, you must obtain a normal spin lock before accessing the data in the bottom half. You do not need to disable bottom halves because a tasklet never preempts another running tasklet on the same processor.
+
+With softirqs, regardless of whether it is the same softirq type or not, if data is shared by softirqs it must be protected with a lock. Recall that softirqs, even two of the same type, may run simultaneously on multiple processors in the system. A softirq will never preempt another softirq running on the same processor, however, so disabling bottom halves is not needed.

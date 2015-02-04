@@ -1,0 +1,54 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-09-26T10:33:09+03:00
+
+====== Receiving Netlink MEssages in user space ======
+Created Friday 26 September 2014
+
+http://www.home.unix-ag.org/simon/files/netwatch.c
+
+
+
+**nice example**
+msg = { &sa, sizeof(sa), &iov, 1, NULL, 0, 0 };
+len = recvmsg(fd, &msg, 0);
+
+for (nh = (struct nlmsghdr *) buf; NLMSG_OK (nh, len);
+     nh = NLMSG_NEXT (nh, len)) {
+    /* The end of multipart message. */
+    if (nh->nlmsg_type == NLMSG_DONE)
+        return;
+
+   if (nh->nlmsg_type == NLMSG_ERROR)
+        /* Do some error handling. */
+    ...
+
+   /* Continue with parsing payload. */
+
+
+**nice example**
+
+while (1)
+    {
+    
+          if ((len = recv (fd, buf, NL_BUFSIZE, 0)) < 0)
+            {
+              fprintf (stderr, "Read From Socket Failed...\n");
+              if (errno != EAGAIN)
+                return -1;
+            }
+
+          for (nl_msg = (struct nlmsghdr *) buf;
+               NLMSG_OK (nl_msg, len);
+               nl_msg = NLMSG_NEXT (nl_msg, len))
+            {
+              switch (nl_msg->nlmsg_type)
+                {
+                  case RTM_NEWADDR:
+                  case RTM_DELADDR:
+                    parse_if_message (nl_msg);
+                    break;
+                  case RTM_NEWLINK:
+                    {
+                         ......
+    }

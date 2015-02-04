@@ -1,0 +1,136 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-12-22T14:39:11+02:00
+
+====== rtspTask ======
+Created Monday 22 December 2014
+
+**1)** **Installing ffmpeg from source, Guide üzerinden takip ettim. **
+https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu
+
+Libraries have been installed in:
+   /home/rifat/installedProgs/ffmpeg_build/lib
+
+If you ever happen to want to link against installed libraries
+in a given directory, LIBDIR, you must either use libtool, and
+specify the full pathname of the library, or use the `-LLIBDIR'
+flag during linking and do at least one of the following:
+   - add LIBDIR to the `LD_LIBRARY_PATH' environment variable
+     during execution
+   - add LIBDIR to the `LD_RUN_PATH' environment variable
+     during linking
+   - use the `-Wl,-rpath -Wl,LIBDIR' linker flag
+   - have your system administrator add LIBDIR to `/etc/ld.so.conf'
+
+See any operating system documentation about shared libraries for
+more information, such as the ld(1) and ld.so(8) manual pages.
+
+
+ffmpeg configure komutu
+./configure --prefix="$HOME/installedProgs/ffmpeg_build" --extra-cflags="-I$HOME/installedProgs/ffmpeg_build/include" --extra-ldflags="-L$HOME/installedProgs/ffmpeg_build/lib" --bindir="$HOME/bin" --enable-gpl --enable-libass --enable-libfdk-aac --enable-libfreetype --enable-libmp3lame --enable-libopus --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libx264 --enable-nonfree --enable-x11grab
+
+**2)   live555 compile**
+[[./genMakefiles]] linux
+make
+make install    [[/usr/local/lib]] altına install ediyorsun
+
+
+**3)   libc2rtsp compile**
+
+libmodeo yu compile et, autoreconf, configure, make
+libc2rtsp yi compile et, autoreconf, configure, make   <= burda dikkat etmen gereken makefile.am içeriğine PC de çalışacaksan  i386, arm da çalışacaksan armv7 yazıcaksın
+  #LIVE555=$(top_srcdir)/../thirdparty/live555/arm
+ 11 LIVE555=$(top_srcdir)/../thirdparty/live555/i386
+
+#LIVE555=$(top_srcdir)/../thirdparty/live555/arm
+ 11 LIVE555=$(top_srcdir)/../thirdparty/live555/i386
+
+
+**4) live555 'i çalıştır**
+mediaserver altına yerleştirdiğin dosyaları,  live555MediaServer'ı çalıştırıp stream edebilirsin
+
+!!! modeo dan çıkan bazı ts dosyalarını stream etmiyor  [[./Desktop/svs/modeo_Modeo_1216_133541_00.ts]]    bunu etmedi 
+
+       cp ./tasks/tsGen/opencaster/OC3.demo.ts [[~/projects/hdmodeo/tasks/streamServer/live/mediaServer/tavsan.ts]]
+       cd ~/projects/hdmodeo/tasks/streamServer/live/mediaServer
+       [[./live555MediaServer]]
+
+       daha sonra libc2rtsp/test altında  test programını calıstır
+       ./libc2rtsp-test rtsp://192.168.4.133:8554/tavsan.ts
+
+
+*****************************************
+**ffmpeg cross compile macerası**
+
+buildroot ile derledim, beagleboard da denedim
+ [[output/target/usr/lib]] altından [[/usr/lib]] altına atıyorsun
+
+libavdevice.so.56
+libavfilter.so.5
+libavformat.so.56
+libavcodec.so.56
+libavresample.so.2
+libswresample.so.1
+libswscale.so.3
+libavutil.so.54
+libvpx.so.1
+libopus.so.0
+
+libSDL-1.2.so.0 libSDL-1.2.so.0.11.4
+libvorbisenc.so.2 libvorbisenc.so.2.0.10
+libvorbis.so.0 libvorbis.so.0.4.7 
+libogg.so.0 libogg.so.0.8.2
+
+libx264.so.142 
+libfdk-aac.so.0 libfdk-aac.so.0.0.4
+libfaac.so.0 libfaac.so.0.0.0
+libx264.so.142
+******************************
+
+**Ffmpeg çalışması için gerekli komutlar**
+cd [[/home/rifat/installedProgs/buildroot/output/host/usr/arm-buildroot-linux-gnueabi/sysroot/usr/lib]]
+
+tar cvfz ffmpeg_libraries.tar.gz libavdevice.so.56 libavfilter.so.5 libavformat.so.56 libavcodec.so.56 libavresample.so.2 libswresample.so.1 libswresample.so.1 libswscale.so.3 libavutil.so.54 libavutil.so.54 libvpx.so.1 libopus.so.0 libSDL-1.2.so.0 libSDL-1.2.so.0.11.4 libvorbisenc.so.2 libvorbisenc.so.2.0.10 libvorbis.so.0.4.7  libogg.so.0 libogg.so.0.8.2 libavdevice.so.56.3.100 libavfilter.so.5.2.103 libavformat.so.56.15.102 libavcodec.so.56.13.100 libavresample.so.2.1.0 libavutil.so.54.15.100 libx264.so.142 libfdk-aac.so.0 libfdk-aac.so.0.0.4 libfaac.so.0 libfaac.so.0.0.0 libx264.so.142
+
+**Buildroot** **Download edip daha sonra direk ffmpeg cross compile etme**
+önce buildroot'u indir, halihazırdaki config dosyasını kullan
+
+cd  [[~/installedProgs/buildroot/dl]]
+cp ffmpeg-2.0.5.tar.gz [[~/ffmpeg-2.0.5.tar.gz]]
+tar xvf ffmpeg-2.0.5.tar.gz
+cd ffmpeg-2.0.5
+mkdir install
+./configure --enable-cross-compile --cross-prefix=/home/rifat/installedProgs/buildroot/output/host/usr/bin/arm-none-linux-gnueabi- --sysroot=/home/r
+ifat/installedProgs/buildroot/output/host/usr/arm-buildroot-linux-gnueabi/sysroot --host-cc=/usr/bin/gcc --arch=arm --target-os=linux --pkg-config=/ho
+me/rifat/installedProgs/buildroot/output/host/usr/bin/pkg-config --prefix=/home/rifat/ffmpeg-2.5.2/install --enable-gpl --enable-version3 --enable-non
+free --enable-postproc --enable-libfaac --enable-libx264 --enable-bsf=h264_mp4toannexb --enable-bsf=aac_adtstoasc --cpu=cortex-a8
+
+make
+make install
+
+
+*******************************************
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       
+                                                                                                                                  
+

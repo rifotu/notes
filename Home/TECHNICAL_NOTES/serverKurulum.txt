@@ -1,0 +1,179 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-12-12T11:18:42+02:00
+
+====== serverKurulum ======
+Created Friday 12 December 2014
+
+
+Bu dosya modeo sunucuya sonradan web stream sayfası kurmayı anlatır. Bu dosya ile birlikte aşağıdaki dosyalarda verilir :
+  * www.tar.gz
+  * script.tar.gz
+  * modeo_db.tag.gz
+
+* php ve apache kur
+sudo apt-get install php5 apache2
+
+
+* mysql veritabanı kur
+----------------------
+sudo apt-get install mysql-server
+
+bu adımda mavi ekranda şifre isteyecek. şifre mysql in ana kullanıcı şifresi olacak. modeo verilebilir.
+mysql in ana kullanıcı adı bu adımda ayarlanmaz ve root dur.
+
+
+* veritabanı ayarlama programı kur
+----------------------------------
+sudo apt-get install phpmyadmin
+
+apache ve diğer bir web sunucu için seçenek gelecek. apache yi boşluk tuşu ile seç ve tab a basatak tamam a gel. enter ile onayla.
+
+evet ve hayır lı bir soru soracak. evet de devam et.
+
+bu adımda üç kere şifre isteyebilir. birincisi mysql in root şifresidir muhtemelen. bir önceki adımda vermiştik. sonraki iki şifre de phpmyadmin in kullanacağı şifreler olabilir. modeo verilebilir. mysql root şifresi ile aynı olması unutmamak için iyi olur.
+
+
+* veritabanına kullanıcı ekle
+----------------------------
+
+modeo_db.tar.gz dosyasındaki modeo_db.sql dosyasını bir yere aç.
+
+şu adresi yazaran phpmyadmin aracını aç : http://localhost/phpmyadmin/
+kullanıcı adı : root
+şifresi : bir önceki adımda verilen şifre
+
+üst ortalardaki Privilages sekmesine bas.
+
+ortalardaki Add new user a bas.
+
+aşağıdaki verilen alanlara yanlarındaki değerleri gir:
+
+username : modeo_db_user
+Host : localhost
+Password : modeo_db_password123
+Re-type : modeo_db_password123
+
+sol alttaki DATA kutsundaki tüm seçenekleri seç (SELECT, INSERT,...)
+
+sağ en alttaki Go ya bas
+
+
+* veritabanını oluştur
+--------------------------
+
+modeo_db.sql dosyasını gedit ile açıp içindekilerin hepsini kopyala.
+
+phpmyadmin de, üstteki SQL sekmesine bas.
+
+ortadaki büyük alana kopyaladıklarını yapıştır.
+
+
+* web dosyalarını kur
+-----------------------
+
+/var/www dizinindekileri sil veya biryerlere taşı.
+
+www.tar.gz dosyasının içindekileri /var/www dizinine boşalt:
+
+sudo tar -xvzf www.tar.gz /var/www/
+
+
+* web sayfasının veritabanı ayarlarını gir
+------------------------------------------
+
+/var/www/application/config/database.php dosyasını aç.
+
+Aşağıdaki alanlara yukarda belirlediğin kullanıcı adı ve şifresini gir.
+$db['default']['username'] = 'modeo_db_user';
+$db['default']['password'] = 'modeo_db_password123';
+
+
+* stream betiğini değiştir
+--------------------------
+
+script.tar.gz içindeki dosyayı /home/modeo/conf/script/ içindeki ile değiştir.
+
+dosyayı çalıştırılabilir yap : chmode 777 /home/modeo/conf/script/media_rtmp.sh
+
+
+
+* stream ayarlarını yap
+-----------------------
+
+/home/modeo/conf/script/media_rtmp.sh dosyasının başındaki değerleri değiştirerek ayarları yap.
+
+gerekli açıklama dosyada var.
+
+
+* iç ve dış ağdan girme için yapılandır
+----------------------------------------
+
+web sayfasının içerden mi yoksa dışardan mı açıldığını anlamak için aşağıdaki dosyada ayar yapmak gerekiyor.
+
+iç ip yi ifconfig ile öğren.
+
+ayar dosyasını aç.
+
+sudo gedit /var/www/application/conf/config.php
+
+dosyadan aşağıdaki değeri
+
+$config['server_local_ip'] = array('192.168.4.54');
+
+sunucunun iç ip si ile değiştir.
+
+
+* güvenlik duvarında delik aç
+------------------------------
+
+RTMP protokolünden video izleyebilmek için 1935 TCP portunu aç.
+
+
+
+* web sayfasını dene
+-----------------------
+
+adres satırına sunucu ip sini yaz
+
+kullanıcı adı : admin
+şifre : admin
+
+* ModeoID leri yayın başladığında otomatik eklenecektir. 
+Otomatik eklenen bu ModeoID leri sadece admin görebilir.
+
+
+
+* Bir web sunucuya birden fazla akış (stream) yönlendirilmek istendiğinde
+--------------------------------------------------------------------------
+
+Web sunu olarak çalışacak
+
+Aşağıdaki dosyada 1935 arat ve sadece o satırdaki 1935 portunu uygun port ile değiştir. 
+gedit /home/modeo/conf/crtmpserver/builders/cmake/crtmpserver/crtmpserver.lua
+
+Örneğin yönlendirilecek ikinci sunucunun portunu 1935 den 1936 a değiştir. 
+Web sunucuda da akış yapılacaksa ayar değiştirilmediğinde portu 1935 olacak.
+
+Güvenlik duvarında her akış sunucu için yukarda verilen port numarasının aç.
+Yukardaki örnekte iki port ta güvenlik duvarında açılmalı : 1935 ve 1936.
+
+
+--------------------------------------------------------
+
+Olası sorunlar:
+
+S : web sayfası boş açılıyorsa,
+C : veritabanı kurulmamış veya veritabanı ayarları doğru girilmemiş olabilir.
+
+S : Web sayfası açılıyorsa ve sayfaya ModeoID otomatik eklenmiyorsa,
+C : media_rtmp.sh dosyasındaki ayarlarda hata olabilir.
+
+S : ModeoID eklnemiş ve stream yapıyorsa fakat oynatıcıda yüklenmiyorsa,
+C : RTMP için 1935 TCP portu açılmamış olabilir. (Birden fazla sunucu için her sunucu için ilgili portlar açılmalıdır.)
+
+S : Sayfadaki video oynatıcı yüklenmiyorsa,
+C : Sayfanın açıldığı sistemde Flash player yüklü olmayabilir.
+
+
+

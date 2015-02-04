@@ -1,0 +1,180 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-30T14:15:38.333450
+
+====== GIT RELATED ======
+Created Wednesday 30 April 2014
+
+
+**generating which files changed info with git log**
+git log --stat
+
+**Generating a local branch and setting it track a remote branch**
+git fetch
+git branch --track branch-name origin/branch-name
+
+First command makes sure you have remote branch in local repository. Second command creates local branch which tracks remote branch. It assumes that your remote name is origin and branch name is branch-name.
+--track option is enabled by default for remote branches and you can omit it.
+
+**forcing  merge in git, overwriting branch contents onto the target branch completely**
+http://stackoverflow.com/questions/9434959/whats-the-best-way-to-force-a-merge-in-git
+
+**— keeping files from various branches during merging**
+http://gitready.com/advanced/2009/02/25/keep-either-file-in-merge-conflicts.html
+git checkout --ours index.html
+git checkout --theirs _layouts/default.html
+
+**git rm   multiple files at once**
+http://www.commandlinefu.com/commands/view/1246/git-remove-files-which-have-been-deleted
+git add  -u 
+
+
+**Nice site explaining git commands**
+http://gitref.org/remotes/#fetch
+
+**changing remote repository address**
+git remote -v
+# origin  git@github.com:USERNAME/REPOSITORY.git (fetch)
+# origin  git@github.com:USERNAME/REPOSITORY.git (push)
+Change your remote's URL from SSH to HTTPS with the remote set-url command.
+
+git remote set-url origin https://github.com/USERNAME/REPOSITORY_2.git
+git remote set-url origin git@192.168.2.145:modeo/modeo.git
+
+Verify that the remote URL has changed.
+git remote -v
+# Verify new remote URL
+# origin  https://github.com/USERNAME/REPOSITORY2.git (fetch)
+# origin  https://github.com/USERNAME/REPOSITORY2.git (push)
+
+**git stash  - **
+git add .
+Or add individual files to the index, your pick. Stash your changes away with:
+git stash
+And boom! You’re back to your original working state. Got that bug fixed? Bring your work back with:
+git stash apply
+You can also do multiple layers of stashes, so make sure to use
+git stash list
+To check out all of your current ones. If you need to apply a stash from deeper in the stack, that’s easy too. Here’s how to apply the second stash you’ve got:
+git stash apply stash@{1}
+You can also easily apply the top stash on the stack by using (Thanks jamesgolick!):
+git stash pop
+A note with this command, it deletes that stash for good, while apply does not. You can manually delete stashes with:
+git stash drop <id>
+Or delete all of the stored stashes with:
+git stash clear
+
+
+**Nice git tips**
+https://wiki.videolan.org/git#Getting_VLC_or_x264_source_code_via_Git
+
+ **Using git with color (Tip)**
+If you want to use git with colored output use:
+$ git config --global color.ui true
+
+
+**Cloning all remote branches with git**
+http://stackoverflow.com/questions/67699/clone-all-remote-branches-with-git
+
+**git diff with meld /  comparing a single file between two COMMITS**
+git difftool COMMIT_ID1..COMMIT_ID2  -- rtl/comp_packet.vhd
+git difftool HEAD:src/main/java/com.xyz.test/MyApp.java HEAD^:src/main/java/com.xyz.test/MyApp.java
+
+
+**git diff with meld - between branches**
+git config --global diff.tool meld
+git difftool branchA..branchB
+
+**Checking remote repo info**
+git remote show origin
+
+**showing which files changed in a git commit**
+Recently I wanted to pull a list of changed files from an older commit from the command line.
+Turns out (like most things in Git) this is very easy to do.
+git show --name-only {commit ID}
+
+-- **Checking commits at remote master**
+git remote add origin <remote reference>
+git fetch
+git log origin/master
+
+ **Getting remote branches into your repo and tracking**
+git checkout --track origin/daves_branch
+
+
+**Listing tags in remote branches**
+git ls-remote --tags origin
+
+To more precisely answer this question, to check if a specific tag is in a given remote use:
+git ls-remote <remote-name> refs/tags/<tag-name>
+
+
+**Listing a certaing tag pattern**
+git tag -l 'internal_modeo_RC2.0*'
+
+
+**Git tag, Why this duplicate tag in remotes?**
+30bd19ef190cf664356c715b56044ce739f07468        refs/tags/Prod_Release_2.3
+4ae15ee04c2c41bfc7945e66f4effc746d52baec        refs/tags/Prod_Release_2.3^{}
+
+That isn't a tag, it's a pointer to the commit that the tag points to. You can read more about this in the git show-ref man page.
+
+**Annotated Tags vs Lightweight Tags**
+A lightweight tag is very much like a branch that doesn’t change — it’s just a pointer to a specific commit. Annotated tags, however, are stored as full objects in the Git database. They’re checksummed; contain the tagger name, e-mail, and date; have a tagging message; and can be signed and verified with GNU Privacy Guard (GPG). It’s generally recommended that you create annotated tags so you can have all this information; but if you want a temporary tag or for some reason don’t want to keep the other information, lightweight tags are available too.
+
+
+**Creating an Annotated Tag**
+
+Creating an annotated tag in Git is simple. The easiest way is to specify -a when you run the tag command:
+
+$ git tag -a v1.4 -m 'my version 1.4'
+
+The -m specifies a tagging message, which is stored with the tag. If you don’t specify a message for an annotated tag, Git launches your editor so you can type it in.
+
+
+**Listing tag message**
+git show <tagname>
+
+**How to: Delete a remote Git tag**
+If you have a tag named '12345' then you would just do this:
+
+git tag -d 12345
+git push origin :refs/tags/12345
+
+
+**MERGE**
+$ git checkout master
+$ git merge hotfix
+
+merges hotfix into master
+---------
+
+
+
+
+
+**To change a commit message of the most recent (unpushed) commit, you can simply use**
+
+git commit --amend -m 'new message'
+To change messages of (unpushed) commits further in the past:
+
+git rebase -i [COMMIT BEFORE THE FIRST YOU WANT TO EDIT
+
+
+
+
+**To fetch a remote branch, you simply need to:**
+
+git fetch origin
+This will fetch all of the remote branches for you. You can see the branches available for checkout with:
+
+git branch -v -a
+With the remote branches in hand, you now need to check out the branch you are interested in, giving you a local working copy:
+
+git checkout -b test origin/test
+
+
+
+
+
+

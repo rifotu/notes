@@ -1,0 +1,8 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-12-29T11:10:44+02:00
+
+====== static vs dynamic ======
+Created Monday 29 December 2014
+
+http://stackoverflow.com/questions/9809213/what-are-a-and-so-files

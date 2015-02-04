@@ -1,0 +1,15 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-12-02T16:47:48+02:00
+
+====== valgrind ======
+Created Tuesday 02 December 2014
+
+
+[[./configure]] --prefix=/path/to/install
+make
+make install
+
+valgrind --leak-check=full -v [[./example]]
+
+http://www.cprogramming.com/debugging/valgrind.html

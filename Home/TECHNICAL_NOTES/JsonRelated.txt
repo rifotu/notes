@@ -1,0 +1,123 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-08-25T13:32:18+03:00
+
+====== JsonRelated ======
+Created Monday 25 August 2014
+
+json deserialize :    json txt -> structure
+json serialize :         structure -> json txt
+
+JSON is an open standard format that uses human-readable text to transmit data objects consisting of attribute–value pairs. It is used primarily to transmit data between a server and web application, as an alternative to XML.
+ JSON grew out of a perceived need for stateful, real-time server-to-browser communication without using browser plugins such as Flash or Java applets, which were the dominant method at the time.
+
+In computer science, the state of a  computer program is a technical term for all the stored information, at a given instant in time, to which  program has access.[1] The output of a computer program at any time is completely determined by its current inputs and its state.
+Similarly, a computer program stores data in variables, which represent storage locations in the computer's memory. The contents of these memory locations, at any given point in the program's execution, is called the program's state.[4][5][6]
+
+ 
+{{./pasted_image001.png}}
+
+**Very nice tutorial** http://www.copterlabs.com/blog/json-what-it-is-how-it-works-how-to-use-it/
+
+{{./pasted_image.png}}
+
+
+**örnek json dosyası**
+{
+  "firstName": "John",
+  "lastName": "Smith",
+  "isAlive": true,
+  "age": 25,
+  "height_cm": 167.6,
+  "address": {
+    "streetAddress": "21 2nd Street",
+    "city": "New York",
+    "state": "NY",
+    "postalCode": "10021-3100"
+  },
+  "phoneNumbers": [
+    {
+      "type": "home",
+      "number": "212 555-1234"
+    },
+    {
+      "type": "office",
+      "number": "646 555-4567"
+    }
+  ],
+  "children": [],
+  "spouse": null
+}
+
+
+
+**JSON Schema**
+
+JSON Schema[16] specifies a JSON-based format to define the structure of JSON data for validation, documentation, and interaction control. A JSON Schema provides a contract for the JSON data required by a given application, and how that data can be modified.
+Json Schema, json dosyasının düzgünlüğünü kontrol etmek için kullanılmalı
+
+Example JSON Schema (draft 3) 
+{
+  "$schema": "http://json-schema.org/draft-03/schema#",
+  "name": "Product",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "number",
+      "description": "Product identifier",
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the product",
+      "required": true
+    },
+    "price": {
+      "type": "number",
+      "minimum": 0,
+      "required": true
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "stock": {
+      "type": "object",
+      "properties": {
+        "warehouse": {
+          "type": "number"
+        },
+        "retail": {
+          "type": "number"
+        }
+      }
+    }
+  }
+}
+
+
+**The JSON Schema above can be used to test the validity of the JSON code below:**
+
+{
+  "id": 1,
+  "name": "Foo",
+  "price": 123,
+  "tags": [
+    "Bar",
+    "Eek"
+  ],
+  "stock": {
+    "warehouse": 300,
+    "retail": 20
+  }
+}
+
+
+
+
+
+
+
+

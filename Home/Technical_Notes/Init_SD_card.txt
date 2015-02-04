@@ -1,0 +1,37 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-16T11:03:25.530383
+
+====== Init SD card ======
+Created Wednesday 16 April 2014
+
+**-Init SD Card**
+
+sudo ./mkcard.sh /dev/sdb
+
+**-Init Boot Sector and Kernel**
+
+sudo cp x-loader/MLO /media/boot/
+sync
+sudo cp u-boot-release/u-boot.bin /media/boot/
+sync
+sudo cp uImage /media/boot/
+sync
+
+**-Init Filesystem**
+
+sudo su
+mknod /tmp/mtdblock0 b 31 0
+modprobe mtdblock
+modprobe mtdram total_size=65536 erase_size=256
+modprobe jffs2
+dd if=/pathto/rootfs.jffs2 of=/tmp/mtdblock0
+mkdir /media/jffs2
+mount -t jffs2 /tmp/mtdblock0 /media/jffs2
+sudo cp –a /media/jffs2/* /media/rootfs/
+umount /media/jffs2
+umount /media/rootfs
+#tar --ignore-failed-read -jchf rootfs.tar.bz2 /media/rootfs/*
+
+
+www.ctech.com.tr/modeo/rootfs_RC203_3730_mainboard_UDHCP_PROBLEMI_COZULDU_03072014.jffs2

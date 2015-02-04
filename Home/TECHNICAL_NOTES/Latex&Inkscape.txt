@@ -1,0 +1,54 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-08-20T09:07:09+03:00
+
+====== Latex&Inkscape ======
+Created Wednesday 20 August 2014
+
+
+**Nice Tutorials**
+
+sharelatex tutorialları gayet iyi oradan devam et
+https://www.sharelatex.com/learn/Inserting_Images
+
+https://earthsci.stanford.edu/computing/unix/formatting/latexexample.php
+http://www.andy-roberts.net/writing/latex/importing_images
+http://en.wikibooks.org/wiki/LaTeX/Floats,_Figures_and_Captions
+http://www.golatex.de/wiki/%5Cincludegraphics
+https://www.sharelatex.com/blog/2013/04/11/how-to-use-graphics-in-latex.html
+
+**SVG & Latex**
+http://two.mirrortr.com/CTAN/info/svg-inkscape/InkscapePDFLaTeX.pdf
+
+**Inkscape de EPS export ederken Background shrink**
+File -> Document Settings -> Resize Page to drawing and selection
+
+**inkscape**
+https://inkscapetutorials.wordpress.com/category/3d-effects/   nice tutorials
+http://www.designmarkgraphics.co.uk/blog/articles/2013/05/28/create-3d-curled-arrows-in-inkscape.html     Creating 3D curled arrows in inkscape
+
+**3D rotation**
+http://ahninniah.blogspot.ru/2013/04/isometric-projection-in-inkscape.html
+
+
+Online Latex Collaborative Platform
+https://authorea.com/
+https://www.writelatex.com/
+https://www.sharelatex.com/
+
+Tracking Changes in Latex (latexdiff)
+http://tex.stackexchange.com/questions/65453/track-changes-in-latex
+http://www.ctan.org/pkg/latexdiff
+
+Convert 
+http://www.sciweavers.org/free-online-latex-equation-editor
+
+**Universal document Converter**
+http://johnmacfarlane.net/pandoc/
+
+**Read and annotate you PDFs, take notes to your PDFs, looks really nice**
+http://www.mendeley.com/features/read-and-annotate/
+
+
+
+

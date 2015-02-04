@@ -1,0 +1,63 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-09-29T08:40:01+03:00
+
+====== ProductivityTools ======
+Created Monday 29 September 2014
+
+
+
+**invoice holder, looks nice**
+https://www.shoeboxed.com/
+
+**Create legally binding agreements in seconds**
+http://www.shakelaw.com/
+
+**Penta Dactyl links**
+shift l    forward
+shift h    backward
+f ile linkleri aç
+:open   sayfa
+:t    sayfa ismi
+d   tap kapatır
+
+
+
+**nice addition for tmux and python**
+https://github.com/powerline/powerline
+http://askubuntu.com/questions/283908/how-can-i-install-and-use-powerline-plugin
+
+**Tmux - Vim - Pentadactyl Intro !! Perfect combination !!**
+
+bash - tmux - vim için configurasyon dosyaların olsun bunları github'a at
+
+tmux enterasan bir şey, 
+client - server yapısı var. Mesela server'a baglanıp orada bir program çalıştırıyorsun ondan sonra
+compile ediyor saatlerce,   tmux ile acarsan eger, attach ve detach sansın var. Ornek vermen gerekirse
+
+linode a baglan,   tmux ile terminal aç
+işini yap, programı compile etmeye bırak daha sonra tmux dan detach et,
+ssh exit yap 
+çık git
+tekrardan baglan, tmux'a connect et bum, compile işlemin hala devam ediyor olucak
+
+firefox - pentadactyl plugin! great stuff really
+https://danielmiessler.com/blog/enhancements-to-shell-and-vim-productivity/#tmux
+https://danielmiessler.com/study/tmux/
+http://bilalquadri.com/blog/2014/03/02/harmonizing-with-vi-nature/#readline
+https://github.com/christoomey/vim-tmux-navigator
+
+**documentation tool, looks great**
+http://sphinx-doc.org/install.html
+
+**Conversion between files   html, odt, docx**
+http://johnmacfarlane.net/pandoc/
+
+**Convert / Extract images, latex docs GREAT STUFF**
+www.sciweavers.org
+http://www.sciweavers.org/free-online-latex-equation-editor
+
+Taking notes on PDFs, great PDF reader (ciddi güzele benziyor)
+http://www.mendeley.com/features/read-and-annotate/
+yahoo mail adresin
+alphebet metodu sifren

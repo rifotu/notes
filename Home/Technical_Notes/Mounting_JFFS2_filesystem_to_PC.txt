@@ -1,0 +1,93 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-16T11:04:29.983864
+
+====== Mounting JFFS2 filesystem to PC ======
+Created Wednesday 16 April 2014
+
+**JFFS2 uzantılı filesystemi PC ye mount etmek için :**
+# sudo su
+# mknod /tmp/mtdblock0 b 31 0
+# modprobe mtdblock
+# modprobe mtdram total_size=65536 erase_size=256
+# modprobe jffs2
+# dd if=/pathto/rootfs.jffs2 of=/tmp/mtdblock0
+# mkdir /media/jffs2
+# mount -t jffs2 /tmp/mtdblock0 [[/media/jffs2]]
+
+
+
+**Filesystem içerisinde gerekli değişiklikler yapıldıktan sonra tekrar JFFS2 haline getirmek için daha önce kullandığımz yol yeterli olacaktır :**
+# mkfs.jffs2 -qn -r /media/jffs2 -e 128 -p -X zlib -t -v -o rootfs.jffs2
+# sumtool -n -e 0x20000 -p -i rootfs.jffs2 -o rootfs_sum.jffs2
+
+
+----------------------------------------------------------------------------
+----------------------------------------------------------------------------
+
+**mtdram size yetmezse loopback kullanma**
+Well this guide is for initfs which is ~2MB large. There are more ways
+to do it. For rootfs you can use variation of this
+http://www.aweiler.com/linux/debianonflash.html
+http://lists.infradead.org/pipermail/linux-mtd/2006-April/015262.html
+http://wiki.emacinc.com/wiki/Mounting_JFFS2_Images_on_a_Linux_PC
+http://talk.maemo.org/showthread.php?p=192475#post192475
+
+losetup -f                               // determines the free loopback device
+mkdir [[/media/jffs2]]         // determine where you want to mount your stuff
+
+losetup /dev/loop0 /home/rifat/Desktop/rootfs.jffs2   
+mknod /dev/mtdblock0 b 31 0
+modprobe block2mtd block2mtd=/dev/loop0,128ki  (sonuna ki koyabilirsin)
+modprobe jffs2
+mount -t jffs2 /dev/mtdblock0 [[/mnt]]
+
+hata mesajı,  [[/mnt]] dışında bir yere mount edersen problem oluyor
+mount -t jffs2 /dev/mtdblock0 [[/media/jffs2]]    [[/media/jffs2]] altına mount ettiğinde problem oluyor
+ls: cannot access /media/jffs2/mnt: Input/output error
+ls: cannot access /media/jffs2/home: Input/output error
+
+  
+NOTE THAT
+128 is not rootfs size but erase size. It should be equal to the value
+of mkfs.jffs2  --eraseblock=VALUE   in our case it's 128
+
+for unmounting the flash
+umount [[/mnt]]
+rmmod block2mtd
+losetup -d /dev/loop0
+
+---------------------------------------------------------
+----------------------------------------------------------
+**Verifying mtdram modprobe**
+modprobe mtdram total_size=24576 erase_size=128
+You can verify that it is loaded by looking in /proc.
+# cat /proc/mtd
+dev:    size   erasesize  name
+mtd0: 01800000 00020000 "mtdram test device"
+
+Then load the mtdblock device, copy the jffs2 filesystem into it, and mount it.
+modprobe mtdblock
+dd if=filesystem.jffs2 of=/dev/mtdblock0
+mount -t jffs2 /dev/mtdblock0 /media/jffs2
+------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

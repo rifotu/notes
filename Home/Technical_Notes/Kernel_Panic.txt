@@ -1,0 +1,74 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-06-24T14:18:40.909858
+
+====== Kernel Panic & System Hangs ======
+Created Tuesday 24 June 2014
+
+
+**Searching for Logs**
+$ grep -i "fatal" [[/var/log/*]]
+
+$ ls -l /var/log/dmesg*
+  -rw-r----- 1 root adm 17169 Jan 10 17:07 dmesg
+  -rw-r----- 1 root adm 17170 Jan  9 20:28 dmesg.0
+  -rw-r----- 1 root adm  6063 Jan  9 20:22 dmesg.1.gz
+  -rw-r----- 1 root adm  6076 Jan  4 22:36 dmesg.2.gz
+  -rw-r----- 1 root adm  6108 Jan  4 22:27 dmesg.3.gz
+  -rw-r----- 1 root adm  6105 Jan  3 14:16 dmesg.4.gz
+
+You can see that the old archives are compressed. To view the compressed files without decompressing them into the folder, we use the zless command. To do so with the first archive:
+
+$ sudo zless /var/log/dmesg.1.gz
+
+
+**Causing a test crash**
+In order to test a crash, the simplest way is to use the sysrq mechanism. Causing a crash is done by either pressing <sysrq>+c or
+
+ #> echo c | sudo tee /proc/sysrq-trigger
+ Note that this might be disabled in some releases. /proc/sys/kernel/sysrq needs to be set to 1 in order to let all of the sysrq keys work.
+
+If everything works, there should be some delay (depending on the memory size). Then the system reboots again into the normal mode. Usually apport kicks in and asks about reporting the issue. Alternatively the report file can be found under /var/crash and either placed somewhere else or be unpacked again by calling:
+
+ #> apport-unpack <report file> <target directory>
+
+
+**autoreboot upon  kernel panic**
+http://blog.remibergsma.com/2012/03/21/howto-automatically-reboot-a-linux-system-after-a-kernel-panic/
+
+There’s a way to configure Linux to reboot automatically, say 10, seconds after a kernel panic occurs. This will quickly and automatically have the server up again. Should rebooting not help, then bad luck and there’s probably some failing hardware part. You’ve then to drive to the data center anyway.
+
+So, how to do that? Well, there are several options to set this parameter. To test this out, use this command:
+
+/sbin/sysctl -w kernel.panic=10
+Note that this setting will not survive a reboot. If you want it to remain active, 
+add this line to ///etc/sysctl.conf//:
+
+kernel.panic=10
+To check the current setting, issue:
+
+cat /proc/sys/kernel/panic
+It is wise to implement some sort of monitoring on reboots or uptime. You definitely want to read the logfiles and find out what exactly happened that led to the kernel panic.
+
+
+
+**script to remote update**
+cat update.sh
+echo "kernel.panic = 5" | sudo tee -a [[/etc/sysctl.conf]]
+
+
+**remote logging**
+http://www.tocpcs.com/howto-log-a-kernel-panic-it-can-be-done/
+
+
+**For loading system**
+http://www.stresslinux.org/sl/
+stresslinux is a minimal linux distribution running from a bootable cdrom, usb, vmware or via PXE (wip).
+stresslinux makes use of some utitlities available on the net like: stress, cpuburn, hddtemp, lm_sensors ...
+stresslinux is dedicated to users who want to test their system(s) entirely on high load and monitoring the health.
+
+
+**simple commands**
+stress komutu
+hardinfo komutu
+

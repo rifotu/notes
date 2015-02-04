@@ -1,0 +1,11 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-12-09T08:20:14+02:00
+
+====== niceIdeas ======
+Created Tuesday 09 December 2014
+
+http://www.farmlink.com/
+http://www.machinerylink.com/
+http://mbed.org/
+

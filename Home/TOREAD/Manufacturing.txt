@@ -1,0 +1,18 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-12-16T08:31:04+02:00
+
+====== Manufacturing ======
+Created Tuesday 16 December 2014
+
+**single QFN stencils**
+http://www.proto-advantage.com/store/product_info.php?products_id=2220072
+
+
+**Assembly - 1-5 days for low/mid volume**
+http://aa-pcbassembly.com/
+http://www.screamingcircuits.com/
+
+
+**stencils**
+http://www.sunstone.com/pcb-products/pcb-solder-stencils

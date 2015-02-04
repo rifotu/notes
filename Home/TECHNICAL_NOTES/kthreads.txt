@@ -1,0 +1,44 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-07-10T13:59:12.201648
+
+====== kthreads ======
+Created Thursday 10 July 2014
+
+
+**Stopping a kernel thread**
+Contrary to the statement in this article, kthread_stop() doesn't send a signal to the kernel thread. It just causes kthread_should_stop() to return TRUE when it is called by the specified thread. This means that (for example) a thread which is blocked in down_interruptible() will not be woken as it would be by a signal. A thread that is to be stopped must call kthread_should_stop() periodically.
+
+It should also be noted that calls to kthread_stop() are serialized. This means that a thread that does not call kthread_should_stop() frequently could cause a delay in stopping other threads. A kernel thread that could be the target of kthread_stop() should be very cautious about calling kthread_stop(), as there is a potential for deadlock.
+
+__When someone calls kthread_stop on your kthread, it will be woken and kthread_should_stop() will return true. You should then return, and your return value will be passed through to kthread_stop.__
+
+
+
+**Sleeping in the kernel  **
+
+In Linux kernel programming, there are numerous occasions when processes wait until something occurs or when sleeping processes need to be woken up to get some work done. There are different ways to achieve these things
+
+__The schedule() Function__
+In Linux, the ready-to-run processes are maintained on a run queue. A ready-to-run process has the state TASK_RUNNING. Once the timeslice of a running process is over, the Linux scheduler picks up another appropriate process from the run queue and allocates CPU power to that process.
+
+A process also voluntarily can relinquish the CPU. The schedule() function could be used by a process to indicate voluntarily to the scheduler that it can schedule some other process on the processor.
+
+Once the process is scheduled back again, execution begins from the point where the process had stopped—__that is, execution begins from the call to the schedule() function.__
+
+
+sleeping_task = current;    // Store a reference to this process' task structure
+                                           //  Note that current is a MACRO that gives a pointer
+                                           //  to the executing process' task_structure
+
+set_current_state(TASK_INTERRUPTIBLE);
+schedule();
+func1();
+/* The rest of the code */
+
+In order to wake it up again one should call
+
+wake_up_process(sleeping_task);
+
+
+

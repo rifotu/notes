@@ -1,0 +1,53 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-09-02T10:34:54+03:00
+
+====== cJSON ======
+Created Tuesday 02 September 2014
+
+**examples**
+https://github.com/joestringer/jsonflowagent
+
+
+
+
+typedef struct cJSON {
+  struct cJSON *next,*prev;
+  struct cJSON *child;
+
+  int type;
+
+  char *valuestring;
+  int valueint;
+  double valuedouble;
+
+  char *string;
+} cJSON;
+
+
+
+
+**Sample JSON and its interpretation**
+{
+    "name": "Jack (\"Bee\") Nimble", 
+    "format": {
+        "type":       "rect", 
+        "width":      1920, 
+        "height":     1080, 
+        "interlace":  false, 
+        "frame rate": 24
+    }
+}
+
+
+The root object has: Object Type and a Child The Child has name "name", with value "Jack ("Bee") Nimble", and a sibling: Sibling has type Object, name "format", and a child. That child has type String, name "type", value "rect", and a sibling: Sibling has type Number, name "width", value 1920, and a sibling: Sibling has type Number, name "height", value 1080, and a sibling: Sibling hs type False, name "interlace", and a sibling: Sibling has type Number, name "frame rate", value 24
+
+cJSON *root,*fmt;
+root = cJSON_CreateObject();  
+cJSON_AddItemToObject(root, "name", cJSON_CreateString("Jack (\"Bee\") Nimble"));
+cJSON_AddItemToObject(root, "format", fmt = cJSON_CreateObject());
+cJSON_AddStringToObject(fmt, "type", "rect");
+cJSON_AddNumberToObject(fmt, "width", 1920);
+cJSON_AddNumberToObject(fmt, "height", 1080);
+cJSON_AddFalseToObject (fmt, "interlace");
+cJSON_AddNumberToObject(fmt, "frame rate", 24);

@@ -1,0 +1,166 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-02T09:40:45.296957
+
+====== OKUNACAKLAR & TODO ======
+Created Wednesday 02 April 2014
+
+
+
+**learning python**
+http://learnpythonthehardway.org/book/
+http://learnpythonthehardway.org/book/next.html
+
+**Function pointers, great stuff**
+http://www.codeproject.com/Tips/800474/Function-Pointer-in-C-Struct
+
+**Live Charting from Mbed devices**
+http://daddyoh.us/blog/2014/12/21/live-charting-from-mbed-devices/
+http://matplotlib.org/    pyhton 2D plotting library
+
+**openlayers book, nice**
+https://leanpub.com/thebookofopenlayers3
+
+**camera enclosure design**
+http://www.adafruit.com/blog/2014/12/18/layer-by-layer-diy-camera-monitor/
+
+**HTML + CSS + JS  something like jsfiddle maybe**
+http://getbootstrap.com/getting-started/
+
+
+
+
+
+**Test driven development  + Continuous integration**
+http://www.levelofindirection.com/journal/2012/12/26/tdd-is-it-worth-it.html
+http://www.levelofindirection.com/journal/2013/6/28/catch-10.html
+http://ledentsov.de/2013/07/06/setting-travis-ci-with-github-for-a-c-project-for-the-first-time-cpp/
+http://www.growing-object-oriented-software.com/
+http://accu.org/index.php/journals/1326
+
+
+**Json SL     github**
+**msgpack.org**
+
+**100 Power Tips for FPGA designers**
+FPGA related,  google books da bulabilirsin.
+
+**Zynq Tutorials - very nice**
+http://blog.idv-tech.com/2014/09/10/very-useful-zynq-and-axi-bus-tutorials/
+http://www.wiki.xilinx.com/Technical+Articles
+
+**Atomwear - BLE project**
+https://github.com/AtomWear
+
+**C signal handler examples**
+http://www.yolinux.com/TUTORIALS/C++Signals.html
+
+**suberp imx6 board, kind of expensive though**
+http://www.imx6rex.com/
+
+**very nice blog**
+http://www.ctrlinux.com/blog/
+http://madalanarayana.wordpress.com/2014/01/25/create-your-own-timer-routine-in-linux/  (this also looks nice)
+
+**returning array of pointers to structures  **(nice link)
+http://cboard.cprogramming.com/c-programming/85211-returning-pointer-array-pointers-problem.html
+
+**binary file reading writing**
+http://stackoverflow.com/questions/5431941/while-feof-file-is-always-wrong
+
+Example 3: using fread properly
+
+size_t nret;
+size_t nmemb = 256;
+
+while (nmemb == (nret = fread(buffer, sizeof *buffer, nmemb, fp))) {
+    // do something with buffer
+}
+
+if (nret) {
+    // do the same thing with buffer that was in the loop
+}
+
+if (ferror(fp)) {
+    // handle the error, probably exit/return
+} else {
+    // continue execution
+}
+
+This one is a little different because of how fread works. The function reads binary data from a file and stores it in a buffer, reading nmemb items of the specified size (sizeof *buffer in the example) or as many as it can.
+
+fread returns the number of items of the specified size successfully read. If it is less than nmemb, an error occurred or the end of the file was reached. If the end of the file was reached or an error occurred, there may have been data read, meaning nret is greater than 0. As a result, what was done with the data read inside the loop must be done one more time to complete processing of the file as much as possible, if desired (whether you choose to process the data read when an error occurs is your option.)
+
+After that, the usual ferror/feof check happens.
+
+**nice tutorials**
+http://c.learncodethehardway.org/
+https://www.kismetwireless.net/   (C++ kodlarını alıp incele, güzel)
+
+**to read**
+Linux Socket Programming	
+Linux Programming Interface
+Linux Application Development
+Advanced Programming in the UNIX Environment
+Beej's Guide to Network Programming (donation yap)
+
+
+embedded linux training
+http://free-electrons.com/training/embedded-linux/
+http://free-electrons.com/blog/
+http://free-electrons.com/blog/beagle-labs/
+
+
+Marc Rochkind's book Advanced Unix Programming 1st edition
+NoPoo sampuansız sac yıkama
+
+Bu tutorialları izle, startup code explanation
+http://www.youtube.com/watch?v=zFAnW7Tzu4U&feature=youtu.be
+
+
+http://www.kohala.com/start/unpv22e/unpv22e.html  Unix network programming
+Philip Koopman, Better Embedded System Software
+Kent Beck, Test Driven Programming
+Robert Oshana, Software Engineering for embedded systems
+
+Nice Blog
+http://software-integrity.com/blog/2010/11/12/documenting-code/
+
+Michael Barr
+http://www.barrgroup.com/Coding-Standard-Muse
+
+cheap pcb  great job
+http://dirtypcbs.com/about.php
+
+3D printer
+http://themicro3d.com/%23specification
+
+
+**3D Printer**
+Mekanik prototipleri çok hızlı bir şekilde üretebilmemize olanak verir
+http://formlabs.com/
+
+**Reflow Oven** 
+BGA kılıflı entegreleri dizerken sürekli olarak fire veriyoruz, krem lehim sürüp fırına verirsek başarı yüzdemiz artar.
+http://www.aliexpress.com/item/free-shipping-NEW-SMD-BGA-IC-Desktop-Automatic-Smart-Reflow-Oven-PUHUI-T962/1325991157.html
+
+
+**Laser Cutter**
+Pick and Place'e verilmeyecek kartların hızlı bir şekilde dizilebilmesi için  stencil gerekiyor. Laser cutter bunun için ideal, bu şekilde prototipleri ve ufak miktarlı üretimleri çok seri bir şekilde yapabiliriz.
+http://www.lpkf.com/products/smt-stencils/laser-cut-smt-solder-paste-stencils.htm
+
+**Temperature and Humidity Benchtop**
+Sıcaklık ve nemin ürün üzerindeki sonuçlarını görmemiz açısından iyi olur. Sonuçta cihazlar Katar'a gidip çöl ortamında yayın yapabiliyor.
+http://www.espec.com/na/products/benchtops/
+
+**Pick And Place Machine**
+Elle dizilen prototiplerin / ufak üretimlerin 1-2 hafta yerine 1 saatte bitmesi sürecimizi hızlandırır.
+MC385V2V model (ornek olması açısından)
+http://www.manncorp.com/smt/product-list_grid.pnp.php%3Fsmt-pick-and-place-pg1-cid228.html
+
+**Rework Station**
+Bozulan BGA kılıflı entegrelerin karta zarar vermeden takılıp çıkarılması için gerekiyor. 
+http://www.ersa.com/art-ir-pl-550-346-1473.html
+
+
+

@@ -1,0 +1,83 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-12-26T16:42:12+02:00
+
+====== libraryBuilding ======
+Created Friday 26 December 2014
+
+* dinamik kütüphanelerde 
+
+
+**ffmpeg building (native) from guide **https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu
+
+cd ~/ffmpeg_sources
+wget http://ffmpeg.org/releases/ffmpeg-snapshot.tar.bz2
+tar xjvf ffmpeg-snapshot.tar.bz2
+cd ffmpeg
+PATH="$HOME/bin:$PATH" PKG_CONFIG_PATH="$HOME/ffmpeg_build/lib/pkgconfig" ./configure \
+  --prefix="$HOME/ffmpeg_build" \
+  **--extra-cflags="-I$HOME/ffmpeg_build/include" \         <= bu iki komut sayesinde diger kütüphaneleri bulabiliyoruz**
+**  --extra-ldflags="-L$HOME/ffmpeg_build/lib" \**
+  --bindir="$HOME/bin" \
+  --enable-gpl \
+  --enable-libass \
+  --enable-libfdk-aac \
+  --enable-libfreetype \
+  --enable-libmp3lame \
+  --enable-libopus \
+  --enable-libtheora \
+  --enable-libvorbis \
+  --enable-libvpx \
+  --enable-libx264 \
+  --enable-nonfree \
+  --enable-x11grab
+PATH="$HOME/bin:$PATH" make
+make install
+make distclean
+hash -r
+
+
+
+**ffmpeg building (cross) via making use of buildroot environment**
+./configure --enable-cross-compile --cross-prefix=/home/rifat/installedProgs/buildroot/output/host/usr/bin/arm-none-linux-gnueabi- --sysroot=/home/rifat/installedProgs/buildroot/output/host/usr/arm-buildroot-linux-gnueabi/sysroot --host-cc=/usr/bin/gcc --arch=arm --target-os=linux --pkg-config=/home/rifat/installedProgs/buildroot/output/host/usr/bin/pkg-config --prefix=/home/rifat/ffmpeg-2.5.2/install --enable-gpl --enable-version3 --enable-nonfree --enable-postproc --enable-libfaac --enable-libfdk-aac --enable-libx264 --enable-bsf=h264_mp4toannexb --enable-bsf=aac_adtstoasc --cpu=cortex-a8
+
+burda dikkat edilmesi gereken **sysroot değişkeni, bu şekilde configure mekanizmasına / alttaki folder'a relative alabiliyorsun**
+ --sysroot=/home/rifat/installedProgs/buildroot/output/host/usr/arm-buildroot-linux-gnueabi/sysroot
+
+ aslında sysroot adresini,  "buildroot/output/staging olarak degistirip derlemek de mantıklı** çünkü buildroot help 'inde 
+Buildroot output is stored in a single directory, output/. This directory contains several subdirectories:
+
+    images/ where all the images (kernel image, bootloader and root filesystem images) are stored. These are the files you need to put on your target system.
+    **build/** where all the components are built (this includes tools needed by Buildroot on the host and packages compiled for the target). This directory contains one subdirectory for each of these components.
+    **staging/** which contains a hierarchy similar to a root filesystem hierarchy. This directory contains the headers and libraries of the cross-compilation toolchain and all the userspace packages selected for the target. However, this directory is not intended to be the root filesystem for the target: it contains a lot of development files, unstripped binaries and libraries that make it far too big for an embedded system. These development files are used to compile libraries and applications for the target that depend on other libraries.
+    **target/** which contains almost the complete root filesystem for the target: everything needed is present except the device files in /dev/ (Buildroot can’t create them because Buildroot doesn’t run as root and doesn’t want to run as root). Also, it doesn’t have the correct permissions (e.g. setuid for the busybox binary). Therefore, this directory should not be used on your target. Instead, you should use one of the images built in the images/ directory. If you need an extracted image of the root filesystem for booting over NFS, then use the tarball image generated in images/ and extract it as root. Compared to staging/, target/ contains only the files and libraries needed to run the selected target applications: the development files (headers, etc.) are not present, the binaries are stripped.
+    **host/** contains the installation of tools compiled for the host that are needed for the proper execution of Buildroot, including the cross-compilation toolchain. 
+
+
+
+**************************
+**ffmpeg compiling with libraries**
+http://www.helyar.net/2010/how-to-compile-ffmpeg-from-source/
+./configure --enable-gpl --enable-nonfree --enable-pthreads --enable-libx264 --enable-libfaac --enable-libmp3lame
+ **--extra-cflags=-I/usr/local/include --extra-ldflags=-L/usr/local/lib**
+make
+make isntall 
+
+
+*********** USE case for making use of buildroot during compiling a library **********************
+fdk-aac kütüphanesinin derlenmesi gerekiyordu ne yaptık?
+
+rifat:$ ./configure --host=arm-none-linux-gnueabi --build=i386  --prefix=$PWD/install
+rifat:$ make
+rifat:$ make install
+rifat:$ cd install
+rifat:$  ls
+             include  lib
+ // bu noktada kütüphaneler ve header file dosyaları oluşturuldu şimdi bunları buildroot sysroot daki [[/usr/lib]] ve [[/usr/inc]] altına atacağız
+rifat:$ tar cvf fdkaac.tar include tar
+rifat:$ tar xvf fdkaac.tar -C [[~/installedProgs/buildroot/output/host/usr/arm-buildroot-linux-gnueabi/sysroot/]]
+
+buraya açmış bulunduk daha sonra ffmpeg kütüphanesine gidip, sysroot 'u yukarıdaki klasör gösterdiginde düzgün bir şekilde derlenmiş olucak sistem
+
+
+

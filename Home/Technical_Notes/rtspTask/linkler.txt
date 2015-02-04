@@ -1,0 +1,19 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-12-29T11:04:53+02:00
+
+====== linkler ======
+Created Monday 29 December 2014
+
+
+https://github.com/mstorsjo/fdk-aac      fdk-aac kaynak kodları
+https://trac.ffmpeg.org/wiki/Encode/AAC
+http://rdoubleui.wordpress.com/2012/01/16/build-ffmpeg-as-shared-library/
+																																		http://rdoubleui.wordpress.com/2012/01/16/build-ffmpeg-as-shared-library/
+https://trac.ffmpeg.org/wiki/Encode/H.264      ffmpeg and H264 encoding guide. Nice information
+
+https://trac.ffmpeg.org/wiki/CompilationGuide/Generic   compilation guide, nice
+https://trac.ffmpeg.org/wiki/CompilationGuide/Ubuntu
+
+
+

@@ -1,0 +1,10 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-12-29T11:11:04+02:00
+
+====== usingLDconfig ======
+Created Monday 29 December 2014
+
+ldconfig is used to update system path for dynamic libraries
+http://choorucode.com/2014/01/14/how-to-add-library-directory-to-ldconfig-cache/
+http://unix.stackexchange.com/questions/27369/ldconfig-issue-with-non-standard-lib-directory-in-centos

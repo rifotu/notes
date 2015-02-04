@@ -1,0 +1,59 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-08-25T15:45:01+03:00
+
+====== ParsinGithubJsonStufff ======
+Created Monday 25 August 2014
+
+curl binary, great stuff to use
+http://curl.haxx.se/libcurl/
+http://curl.haxx.se/docs/install.html
+installing curl
+sudo apt-get install libcurl4-openssl-dev
+
+if you want to update your library
+sudo apt-get purge libcurl4-openssl-dev
+
+then compile it from your source and install
+[[./configure]]
+make
+make install
+
+getting JSON information via github API
+https://developer.github.com/guides/getting-started/
+
+rifat@rifat:~$ curl https://api.github.com/users/defunkt
+{
+  "login": "defunkt",
+  "id": 2,
+  "avatar_url": "https://avatars.githubusercontent.com/u/2?v=2",
+  "gravatar_id": "b8dbb1987e8e5318584865f880036796",
+  "url": "https://api.github.com/users/defunkt",
+  "html_url": "https://github.com/defunkt",
+  "followers_url": "https://api.github.com/users/defunkt/followers",
+  "following_url": "https://api.github.com/users/defunkt/following{/other_user}",
+  "gists_url": "https://api.github.com/users/defunkt/gists{/gist_id}",
+  "starred_url": "https://api.github.com/users/defunkt/starred{/owner}{/repo}",
+  "subscriptions_url": "https://api.github.com/users/defunkt/subscriptions",
+  "organizations_url": "https://api.github.com/users/defunkt/orgs",
+  "repos_url": "https://api.github.com/users/defunkt/repos",
+  "events_url": "https://api.github.com/users/defunkt/events{/privacy}",
+  "received_events_url": "https://api.github.com/users/defunkt/received_events",
+  "type": "User",
+  "site_admin": true,
+  "name": "Chris Wanstrath",
+  "company": "GitHub",
+  "blog": "http://chriswanstrath.com/",
+  "location": "San Francisco",
+  "email": "chris@github.com",
+  "hireable": true,
+  "bio": null,
+  "public_repos": 103,
+  "public_gists": 279,
+  "followers": 13541,
+  "following": 208,
+  "created_at": "2007-10-20T05:24:19Z",
+  "updated_at": "2014-08-25T09:21:45Z"
+}
+
+

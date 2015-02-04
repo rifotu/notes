@@ -1,0 +1,138 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-11-18T08:43:40+02:00
+
+====== Vim ======
+Created Tuesday 18 November 2014
+
+
+**setting space between lines**
+set linespace=4          4 iyi bir degere denk geliyor,
+
+
+**vhdl for vim**
+http://0x7.ch/vim/vhdl/
+
+**simple script to highligt words via leader**
+http://www.vim.org/scripts/script.php?script_id=4636
+http://www.vim.org/scripts/script.php?script_id=2666
+
+**nice tips**
+http://vim.wikia.com/wiki/Switch_between_Vim_window_splits_easily
+
+**editing  and sourcing vimrc file**
+http://vimcasts.org/episodes/updating-your-vimrc-file-on-the-fly/
+:  source $MYVIMRC      update your changes for the current vim file
+:  edit $MYVIMRC            opens vimrc from your current vim
+ 
+
+**Nice** **Colorschemes**
+molokai          -> dark
+peachbuff     -> light
+
+**Setting indentation for C files**
+with this info you can set your indentation for C files  -  
+//http://tedlogan.com/techblog3.html//
+
+**Uninstalling Vim,   installing with better specs**
+**compiling from source, nice!!**
+//http://rajanand02.github.io/articles/vim///
+
+sudo apt-get remove vim vim-runtime gvim
+sudo apt-get remove vim-tiny vim-common vim-gui-common
+
+
+**Using Ctags and Cscope in Vim**
+
+**for cscope**
+  download from cscope.sourceforge.net
+  ./configure
+  make
+  make install 
+
+**Folding code**
+Some common key bindings:
+`za` - toggles
+`zc` - closes
+`zo` - opens
+`zR` - open all
+`zM` - close all
+
+
+**Coloring C function names **
+//http://stackoverflow.com/questions/736701/class-function-names-highlighting-in-vim// 
+I had this very same problem when I started using vim. The solution is simple, you just have to edit the c syntax file used by vim, here's how to do it:
+
+When you start editing a C or C++ file, vim reads the default c syntax file located in
+
+$VIMRUNTIME/syntax/c.vim
+
+(Where $VIMRUNTIME is where you have vim installed. You can find out it's default value by opening vim and using the command ":echo $VIMRUNTIME").
+
+You can simply overwrite that file, or you can create your custom C syntax file (which will be loaded by vim instead of the default one) in this location:
+
+$HOME/.vim/syntax/c.vim      (for UNIX)
+$HOME/vimfiles/syntax/c.vim  (for PC or OS/2)
+
+(I have never used a Mac so I dunno which one will work for you. You can find out more in the vim help, ":help vimfiles")
+
+Now the fun part. Copy the default "$VIMRUNTIME/syntax/c.vim" file to your vimfiles directory ("$HOME/.vim/syntax/c.vim" for UNIX), and edit it by adding these lines:
+
+    " Highlight Class and Function names
+    syn match    cCustomParen    "(" contains=cParen,cCppParen
+    syn match    cCustomFunc     "\w\+\s*(" contains=cCustomParen
+    syn match    cCustomScope    "::"
+    syn match    cCustomClass    "\w\+\s*::" contains=cCustomScope
+
+    hi def link cCustomFunc  Function
+    hi def link cCustomClass Function
+
+That's it! Now functions and class names will be highlighted with the color defined in the "Function" highlight (":hi Function"). If you want to customize colors, you can change the last two lines above to something like this:
+
+hi def cCustomFunc  gui=bold guifg=yellowgreen
+hi def cCustomClass gui=reverse guifg=#00FF00
+
+or you can leave the C syntax file alone and define colors in your vimrc file (":help vimrc"):
+
+hi cCustomFunc  gui=bold guifg=yellowgreen
+hi cCustomClass gui=reverse guifg=#00FF00
+
+(Note the absence of the "def" keyword, go to ":help highlight-default" for details). For the available parameters to the ":hi" command see ":help :highlight".
+
+You can find the complete c.vim file for Vim 7.2 on this link (Note: only use this if you have a non-modified Vim, version 7.2):
+
+//http://pastebin.com/f33aeab77//
+
+And the obligatory screenshot:
+
+    //http://img16.imageshack.us/img16/2073/vimy.png// (Sorry for imageshack)
+
+
+
+
+**vim commands**
+changing colorschemes from within vim
+colorscheme desert
+
+
+
+**vimrc contents**
+" Use desert for console vim, the gvim color theme is selected in .gvimrc
+colorscheme desert
+
+
+" F12: Rebuild ctags database
+map <F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+
+
+" ,cd: Change directory to that of current file
+map ,cd :cd %:p:h<CR>
+
+
+" F6: File list
+map <silent> <F6> :NERDTreeToggle<CR>
+
+" Let Control-S be 'save' as it is in most other editors
+" Thanks Leo for the tip :)
+map <C-s> :w<CR>
+imap <C-s> <C-o>:w<CR>

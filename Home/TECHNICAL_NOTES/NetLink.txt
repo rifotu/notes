@@ -1,0 +1,54 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-09-23T15:56:39+03:00
+
+====== NetLink ======
+Created Tuesday 23 September 2014
+
+thread based
+http://linux-development-for-fresher.blogspot.com.tr/2012/05/understanding-netlink-socket.html
+
+https://github.com/daveti/nex/blob/master/kernel_user/kernel_app.c
+
+http://1984.lsi.us.es/git/netlink-example
+
+
+nice example -> tasklet based
+linux kernel de audit diye arat
+
+
+In multipart messages (multiple nlmsghdr headers with associated payload in one byte stream) the first and all following headers have the NLM_F_MULTI flag set, except for the last header which has the type NLMSG_DONE.
+
+After each nlmsghdr the payload follows.
+
+    struct nlmsghdr {
+        __u32 nlmsg_len;    /* Length of message including header. */
+        __u16 nlmsg_type;   /* Type of message content. */
+        __u16 nlmsg_flags;  /* Additional flags. */
+        __u32 nlmsg_seq;    /* Sequence number. */
+        __u32 nlmsg_pid;    /* Sender port ID. */
+    };
+
+nlmsg_type can be one of the standard message types: NLMSG_NOOP message is to be ignored, NLMSG_ERROR message signals an error and the payload contains an nlmsgerr structure, NLMSG_DONE message terminates a multipart message.
+
+    struct nlmsgerr {
+        int error;        /* Negative errno or 0 for acknowledgements */
+        struct nlmsghdr msg;  /* Message header that caused the error */
+    };
+
+   ACKNOWLEDGE MEKANIZMASI BİRAZ GARİP ACIKCASI!!
+    /* check confirmation */
+    if ( nlh->nlmsg_type == NLMSG_ERROR ) {
+        msgerr = ((struct nlmsgerr*)NLMSG_DATA(nlh));
+        if (msgerr->error != 0) {
+            debug("delivery failure, msgerr->error = %d", msgerr->error);
+            goto err;
+        }
+    } else {
+        printf("netlink_send: next message was not confirmation!\n");
+        goto err;
+    }
+
+
+
+A netlink family usually specifies more message types, see the appropriate manual pages for that, for example, rtnetlink(7) for NETLINK_ROUTE. 

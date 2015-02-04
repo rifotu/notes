@@ -1,0 +1,121 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-12-01T16:47:10+02:00
+
+====== ddd gdb ======
+Created Monday 01 December 2014
+
+gdb break main.c:115       115. satıra break point attı
+
+gdb  binary_name   core            core dump alıyor
+   daha sonra bt                             back trace
+   list                                                     problemli kısmı listele
+
+core dump dosyasını oluşturmak için aşağıdaki ayarları yapman gerekiyor. 
+http://pfigue.github.io/blog/2012/12/28/where-is-my-core-dump-archlinux/
+
+
+
+ddd ile çalıştırmak için
+-g  -Wall ile derle daha sonra
+
+ddd  <binary name> yaz
+
+
+********************************************************
+
+**CROSS DEBUGGING**
+
+*********** SORULAN SORU ******************
+http://www.fayewilliams.com/2013/01/31/gdb-unable-to-find-dynamic-linker-breakpoint-function/#comment-44332
+Hello,
+Thanks for your tutorials, I am cross debugging an application on beagleboard and still get “warning: Unable to find dynamic linker breakpoint function.” after applying “set sysroot /home/rifo/projects/gdbFileSystem” where gdbFileSystem contains a copy of my Beagleboard’s filesystem. Do you have an idea what I might be missing?
+Below I write what commands I use
+
+on TARGET (beagleboard)
+$ gdbserver 192.168.4.133:2222 ./hello_world
+
+on HOST (PC)
+$arm-none-linux-gnueabi-gdb debug (where debug is the objcopy output of –debug-only part of binary)
+(gdb) set sysroot /home/rifo/projects/gdbFileSystem
+(gdb) target remote 192.168.4.132:2222
+
+then I get the above mentioned error
+
+(gdb) info sharedlibrary
+No shared libraries loaded at this time.
+
+*************************************************
+
+
+
+**preparing the gdb setup**
+http://processors.wiki.ti.com/index.php/CCS_Debugging_of_Linux_Applications_with_GDB
+
+**getting the debug symbol** 
+http://stackoverflow.com/questions/866721/how-to-generate-gcc-debug-symbol-outside-the-build-target
+https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/4/html/Debugging_with_gdb/separate-debug-files.html
+
+objcopy --only-keep-debug "${tostripfile}" "${debugdir}/${debugfile}"    // gets the debug symbols from the binary
+strip --strip-debug --strip-unneeded "${tostripfile}"           // in case you want to strip your binary, not needed in our case
+objcopy --add-gnu-debuglink="${debugdir}/${debugfile}" "${tostripfile}"    // adding back the debug info to binary not relevant in our case
+
+
+**feeding gdb the target root file system**
+gdb remote system de shared library dosyalarını debug etmek isterken filesystem'e ihtiyaç duyuyor.
+rsync ile target platformdaki verileri yedekle
+
+https://wiki.archlinux.org/index.php/full_system_backup_with_rsync
+https://www.digitalocean.com/community/tutorials/how-to-use-rsync-to-sync-local-and-remote-directories-on-a-vps
+-a burda archieve anlamına geliyor
+rsync -axv --exclude={\    
+"/dev/*",\
+"/sys/*",\
+"/tmp/*",\
+"/proc/*",\
+"/lost+found/*",\
+"/run/*",\
+"/mnt/*",\
+"/media/*"}\
+ /* \
+rifat@192.168.4.133:/home/rifat/projects/hdmodeo/gdbFileSystem
+
+
+
+**on the target**
+gdbserver 192.168.4.133:2222  [[./binary_name]]      <= note that 192.168.4.133 is the IP address of PC
+
+
+**on the PC**
+# arm-none-linux-gnueabi-gdb debug   <= where debug is the objcopy of the debug information of the binary
+
+(gdb) 
+
+(gdb) target remote 192.168.4.132:2222
+
+(gdb) set sysroot /opt/EMA/cross_compiler/arm-2009q1/
+(gdb) set sysroot-on-target /home/rifat/projects/hdmodeo/gdbFileSystem
+(gdb) target remote 192.168.4.239:2222
+
+
+
+
+**** additional libraries for Modeo filesystem*******
+scp /usr/bin/rsync root@192.168.4.239:/root/rifo
+scp /fullBackup.sh root@192.168.4.239:/root/rifo
+scp /usr/bin/{libpopt.so.0.0.0,libpopt.so.0} root@192.168.4.239:/usr/lib
+scp libthread_db.so.1 root@192.168.4.239:/lib
+
+
+
+**********  ddd support için ****************
+
+ ddd --debugger "arm-none-linux-gnueabi-gdb"
+
+(gdb) set sysroot-on-target /home/rifat/projects/hdmodeo/gdbFileSystem
+(gdb) file debug
+(gdb) target remote 192.168.4.132:2222
+
+
+--enable-bsf=h264_mp4toannexb --enable-bsf=aac_adtstoasc
+

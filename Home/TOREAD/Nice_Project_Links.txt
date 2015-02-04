@@ -1,0 +1,173 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-04-15T14:41:09.652976
+
+====== Nice Project Links ======
+Created Tuesday 15 April 2014
+
+**nice database for mobile applications**
+http://realm.io/
+
+**music tanıma sistemi**
+http://www.mcu-turkey.com/beaglebone-black-uzerinden-qt-arayuzu-ile-muzik-tanima-sistemi/
+
+**imuduino blte**     satın al
+https://www.tindie.com/products/femtoduino/imuduino-btle-revision-104-/
+
+**fcc certified esp8266 wifi module**
+https://www.tindie.com/products/BBTech/esp8266-wifi-module/?utm_source=twitter&utm_medium=twitter&utm_campaign=product_back_in_stock_tweets
+
+http://www.gizmag.com/autonomous-underwater-vehicle/35196/
+
+**selling sensor data**
+https://www.tilepay.org/
+
+**Tag based file browser**
+http://tmsu.org/
+
+**MPU6050 IC driver library**
+http://platformio.ikravets.com/#!/lib/show/107/I2Cdevlib-MPU6050
+
+**Blossom, sprinkler**
+https://www.kickstarter.com/projects/410281849/blossomtm-the-smart-watering-controller
+
+**Printfy - 3D printing serverice**
+http://printify3d.net/
+ 	
+**EYSFCNZXX Bluetooth Low-Energy (BLE) Module**
+http://www.digikey.com/product-highlights/en/EYSFCNZXX-Bluetooth-LowEnergy-BLE-Module/53291?WT.z_sm_link=Twitter_PH_1126
+
+**Libsourcey + libuv -> ffmpeg + openCV**
+http://sourcey.com/libuv-cpp-wrappers/
+
+**Online foreign language learn center**
+Verbling  www.verbling.com
+
+**Rasperry Pi, CanBus parser via WireShark!!**
+http://www.cowfishstudios.com/blog/canned-pi-part1
+
+**open Gargen  - Aquaponics, nice to have kit**
+http://www.cooking-hacks.com/documentation/tutorials/open-garden-hydroponics-irrigation-system-sensors-plant-monitoring
+http://www.cooking-hacks.com/documentation/tutorials/open-aquarium-aquaponics-fish-tank-monitoring-arduino#step2_3
+
+3D printing
+http://phidgets.wordpress.com/2014/11/17/design-to-manufacturing-enclosures/
+
+
+**BioMedical Stuff**
+Robotic Arm  / **Reseller olabilirsin**
+http://www.katiarobot.com/
+http://diybio.org/
+http://www.chaibio.com/  (openSource) PCR, dna analyser
+https://www.kickstarter.com/projects/chaibio/open-qpcr-dna-diagnostics-for-everyone
+http://opentrons.com/  (nice for biolabs)
+https://www.kickstarter.com/projects/932664050/opentrons-open-source-rapid-prototyping-for-biolog
+https://gigaom.com/2014/11/05/the-best-of-haxlr8rs-hardware-startup-demo-day-robots-for-all-friendship-bracelets-for-some/
+
+
+
+**Point - Security at home, quite nice**  -  Reseller olabilirsin
+https://www.kickstarter.com/projects/830527119/point-a-softer-take-on-home-security
+
+**LoT Rasperry Pi**
+http://www.pubnub.com/blog/iot-remote-configuration-w-arduino-raspberry-pi/
+
+**Allpixel - USB interface for all your led needs    opensource**
+https://www.kickstarter.com/projects/1101128588/allpixel-usb-interface-for-all-your-led-needs
+
+**$3 dollar wifi**
+http://www.cnx-software.com/2014/08/28/esp8266-wifi-serial-module-costs-just-5/
+
+**Aquaponics - 3D printer  for education**
+https://www.3dponics.com/learn/
+
+**19$ totally hackable wifi + st32M microcontroller**
+http://www.cnx-software.com/2014/11/14/spark-photon-is-a-19-hackable-iot-wi-fi-board/
+
+**3D printing book**
+http://www.afinia.com/3d-printers-and-printing/announcing-the-afinia-3d-printer-enhanced-educators-ebook
+
+**OlinuXino - imx233 openwrt**
+https://olimex.wordpress.com/tag/openwrt/
+
+**Gas Sensor**
+http://olimex.wordpress.com/2014/09/08/new-product-in-stock-more-mq-gas-sensors-mq-3-alcohol-mq-7-co-and-mq-135-air-quality-alcohol-co2-nh3-benzene/
+
+**New uart to Wifi Chipset**
+http://olimex.wordpress.com/2014/08/28/new-uart-to-wifi-chipset-will-unleash-low-cost-internet-of-things/
+
+**3D printer with A20-OlinXino 10" lcd  nice**
+http://olimex.wordpress.com/2014/10/09/3d-printer-with-a20-olinuxino-micro-and-10-lcd/
+
+**RT5350F-OlinuXino,  nice core with multiple ethernets wifi mac+phy**  - Olimex
+http://olimex.wordpress.com/page/9/
+
+**20$ wifi smart hub**
+http://hackaday.com/2014/11/13/hacking-a-20-wifi-smart-plug/
+
+**open wifi detector**
+http://www.adafruit.com/blog/2014/11/13/open-wifi-detector-with-adafruit-pro-trinket-and-cc3000-3dthursday-3dprinting/
+
+**FPV system, wireless image transmistter with off the shelf components**
+http://embeddedday.com/projects/fpv-system/
+
+**3D printer reviews**
+http://www.makershed.com/products/make-magazine-volume-42
+
+**OpenSampler: Opensource autosampler for use in laboratory / automation related**
+http://openbuilds.com/builds/opensampler-opensource-autosampler-for-use-in-laboratory.1339/
+https://github.com/north90/OpenSampler
+
+**Raspi Pi, full HD IP camera**
+http://www.sonsoftone.com/?page_id=287
+
+**Open source syringe pump**
+http://www.appropedia.org/Open-source_syringe_pump
+
+**open source monitoring**
+http://baylibre.com/acme/
+
+**free wifi mesh network**
+http://en.wikipedia.org/wiki/Freifunk
+http://freifunk.net/en/
+
+**web based dashboard**
+http://weworkweplay.com/play/raspberry-pi-nodejs/
+http://ni-c.github.io/heimcontrol.js/
+http://www.raspberrypi.org/google-coder/
+
+
+**A place to push your data**
+https://data.sparkfun.com/
+
+**mbed v3.0  OS for cortex-M**
+http://developer.mbed.org/blog/entry/Announcing-our-plans-for-mbed-v30/
+
+**Atmel & Arm Lot platform**
+http://atmelcorporation.wordpress.com/2014/10/01/atmel-teams-with-arm-on-iot-development-platform/
+
+
+**USB protocol analyzer**
+"OpenVizsla" Open Source USB Protocol Analyzer
+http://openvizsla.org/
+
+
+makefile related
+https://sites.google.com/site/michaelsafyan/software-engineering/how-to-write-a-makefile
+http://gribblelab.org/CBootcamp/12_Compiling_linking_Makefile_header_files.html
+
+
+
+TCL store, Xilinx
+http://www.youtube.com/watch%3Fv%3DnUb69T1xheA
+
+
+mmap
+http://www.ibm.com/developerworks/aix/library/au-spunix_sharedmemory/
+
+
+
+gökyüzü gözlem - dürbün
+https://eksisozluk.com/konus-20x80--3404260
+http://www.stellarium.org/
+http://www.webdenal.com/digipod-tr-570a-170-cm-tripod_532279.html

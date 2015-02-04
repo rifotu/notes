@@ -1,0 +1,8 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2014-12-29T11:12:32+02:00
+
+====== buildroot ======
+Created Monday 29 December 2014
+
+http://buildroot.uclibc.org/downloads/manual/manual.chunked/ch03.html
