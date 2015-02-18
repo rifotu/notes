@@ -5,34 +5,17 @@ Creation-Date: 2014-04-07T10:48:36.868804
 ====== Home ======
 Created Monday 07 April 2014
 
+nice links
+http://mqtt.org/
+http://www.langmaier.com/post/How-to-use-a-Sierra-Wireless-MC8705-Modem-with-DirectIP-under-Linux
 
+https://firstbuild.com/sam/idea-ndkrdw/
 
-Github  
- rifotu
- Azsq312
-
-sirket ip
-213.74.133.186
-
-Tarkan Bey'in bilgisayarı
-4.86
-
---------------
-wifi şifreleri
-Taksimm K7PTCRJ49FP7V
-Beþiktaþ 09uj-zfwl-2t9m
-kadýköy 09uj-zfwl-2t9k
-c2tech 5GGGBb{XX
-ctechtaksim PLGGG2c#y
-
-
-zedboard.com üyelik
-riforifo
-ctech123
-
-
-
-
-
-
-
+https://github.com/contiki-os/contiki/pull/965
+http://www.dorkbotpdx.org/blog/paul/better_spi_bus_design_in_3_steps
+http://blog.atmel.com/2015/02/10/14-smart-products-for-the-internet-of-toddlers/
+http://3dprintingindustry.com/2015/01/22/nvbots-new-3d-printing-curriculum-is-common-core-compliant/
+http://nvbots.com/
+http://hackaday.com/2015/02/16/turning-a-3d-printer-into-an-injection-molding-machine/
+http://webapplayers.com/inspinia_admin-v1.9.1/css_animation.html
+https://octopart.com/
