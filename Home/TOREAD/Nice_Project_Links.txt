@@ -5,6 +5,18 @@ Creation-Date: 2014-04-15T14:41:09.652976
 ====== Nice Project Links ======
 Created Tuesday 15 April 2014
 
+** datasheet + fiyat bulmak için **
+https://octopart.com/
+
+** Yapılması gereken sensor network kit **
+https://smartmocha.com/
+
+**Drone + Combiner very nice combination**
+http://www.triplepundit.com/2015/02/agriculture-drones-help-farmers-reduce-resource-use/?utm_content=buffer17c9e&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer
+
+**Free IMU,  very nice project **
+http://www.varesano.net/projects/hardware/FreeIMU
+
 **nice database for mobile applications**
 http://realm.io/
 

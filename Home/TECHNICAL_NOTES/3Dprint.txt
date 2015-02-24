@@ -5,6 +5,12 @@ Creation-Date: 2014-08-06T14:42:31+03:00
 ====== 3Dprint ======
 Created Wednesday 06 August 2014
 
+** Queing 3d prints + automatic removal **
+http://nvbots.com/
+
+**  lulzbot extruder hacking **
+http://steven.bitsetters.com/2014/12/31/lulzbot-extruder-hacking/
+
 **lulzbot + octopus**
 http://ieatbrains.com/?p=88
 

@@ -165,7 +165,105 @@ $ cp ~/Desktop/k2_delivery/K2_Kernel/linux-2.6.32-ccmtp/net/ccmtp/ccmtp.ko ~/Des
 
 
 
+======================== WIFI DONGLE STUFF =============================================
 
+Denenen farklı yollar
+
+cross compile sırasında ilk olarak Makefile içinden PLATFORM olarak arm tabanlı bir işlemci secildi (MVL5)
+fakat derlendikten sonra oluşan  driver dosyası insmod edilemedi. 
+
+
+DARK RangeMax Nano USB2.0
+Cross Compile için yapılanlar
+
+(1) MT7601 için kaynak kodları indir
+      git clone https://github.com/porjo/mt7601.git
+
+(2) cross compile için aşağıdaki degisikliklerin yapılması gerekmektedir
+
+src/Makefile:
+
+line 30
+PLATFORM = PC
+
+line 210
+ifeq ($(PLATFORM),PC)
+# Linux 2.6
+LINUX_SRC = /home/rifat/projects/hdmodeo/git/modeo-hd/linux-2.6.32-ccmtp
+# Linux 2.4 Change to your local setting
+#LINUX_SRC = /usr/src/linux-2.4
+LINUX_SRC_MODULE = /home/rifat/projects/hdmodeo/git/modeo-hd/linux-6.32-ccmtp/net/wireless/
+CROSS_COMPILE = /opt/EMA/cross_compiler/arm-2009q1/bin/arm-none-linux-gnueabi-
+ARCH=arm
+export ARCH
+export CROSS_COMPILE
+endif
+
+
+src/include/os/rt_linux.h              http://raspberrypi.stackexchange.com/questions/27173/issue-with-mt7601u-usb-dongle-wifi-driver
+line 282
+typedef struct _OS_FS_INFO_
+{
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,12,0)
+	uid_t				fsuid;
+	gid_t				fsgid;
+#else
+	//kuid_t				fsuid;
+	//kgid_t				fsgid;
+    int				fsuid;  //  changed by RT to overcome compile errors
+    int				fsgid;
+#endif
+	mm_segment_t	fs;
+} OS_FS_INFO;
+
+(3) make komutuyla driver dosyası oluşturulur ve  modeo_client' da   / root / 18 altına atılır
+scp src/os/linux/mt7601Usta.ko root@192.168.2.54:/root/18
+
+(4) firmware  ./src/RT2870STA.dat ,   modeo_client cihazı üzerinde /etc/Wireless/RT2870STA/ klasörüne koyulur
+(modeo_client)  mkdir -p /etc/Wireless/RT2870STA
+scp ./src/RT2870STA.dat  root@192.168.2.54:/etc/Wireless/RT2870STA/
+
+
+--------------------------
+(5) modeo_client üzerinde  wifi scriptlerinin  wlan0 yerine  ra0 olarak degistirilmesi gerekmektedir.
+
+/root/get_wifi_info.sh
+/root/wifi_connection_on
+/etc/init.d/S94Wifi
+
+
+
+Inca - IUDS-300  (lsusb çıktısı    Bus 001 Device 004: ID 0bda:8172)  Wireless Dongle 'ı cross compile etmek için
+
+realtek sitesinden 
+http://218.210.127.131/downloads/downloadsView.aspx?Langid=1&PNid=48&PFid=48&Level=5&Conn=4&DownTypeID=3&GetDown=false&Downloads=true#RTL8188SU
+rtl8191SU  linux driver indirilir   ( 0001-RTL819xSU_usb_linux_v2.6.6.0.20120405.zip )
+
+dosyalar açılır ve makefile da aşağıdaki degisiklik yapılır.
+
++ line14   CONFIG_PLATFORM_MODEO_CLIENT_V2 = y
+
++ line 102  (kernel adresi degistirilmelidir) 
+ifeq ($(CONFIG_PLATFORM_MODEO_CLIENT_V2), y)                                                                                                      
+EXTRA_CFLAGS += -DCONFIG_LITTLE_ENDIAN
+ARCH := arm
+CROSS_COMPILE := arm-none-linux-gnueabi-
+KVER  := 2.6.32
+#KSRC := /home/serkan/workspace/linux2.6.32_ccmtp
+#KSRC := /media/9d87da1a-3479-411c-964a-ef38fc9aaee8/home/murat/workspace/modeo_new/GIT/modeo-src/linux-2.6.32-ccmtp
+#KSRC := /home/cengiz/Projects/Modeo/Modeo_Kernel/hd/linux-2.6.32-ccmtp-orij
+KSRC := /home/rifat/projects/hdmodeo/git/modeo-hd/linux-2.6.32-ccmtp
+ endif
+
+driver compile edilir ve oluşan  ./8712u.ko    modülü modeo_client'a atılıp insmod edilir
+
+daha sonra ifconfig wlan0 up  ve iwlist wlan0 s  komutlarıyla wifi dongle'ın çalışıp çalışmadığı belirlenir
+
+
+farklı donglelar
+WL-167G V3 Wireless N
+INCA- IUDS-300
+Dark RangeMax Nano
 
 
 
